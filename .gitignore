@@ -1,0 +1,4 @@
+back_end/apiKey.js
+back_end/.env
+front_end/firebaseConfig.js
+front_end/firebaseConfigAuth.js
