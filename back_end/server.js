@@ -1,10 +1,12 @@
 import express from 'express';
-// const express = require('express');
 import cors from 'cors';
 import getByGeo from './node_app.js';
 import searchBox from './searchBox.js';
 import placeId from './placeId.js';
-// const { filterLocations } = require('./locationFilters');
+import filterLocations from './filterLocations.js';
+
+import dotenv from 'dotenv';
+dotenv.config();
 
 const app = express();
 const router = express.Router();
@@ -12,11 +14,9 @@ const PORT = 4000 || 5000;
 console.log(PORT);
 app.use(express.json());
 app.use(cors())
-import { apiKeyG} from './apiKey.js';
-import filterLocations from './filterLocations.js';
 
-const apiKey = apiKeyG;
-// const emailKye = gmailKye;
+const apiKey = process.env.API_KEY_SPACE
+
 app.get('/places', async (req, res) => {
     const { longitude, latitude } = req.query
     await getByGeo(longitude, latitude, apiKey).then((map) => {
