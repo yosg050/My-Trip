@@ -1,0 +1,42 @@
+.checkboxContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 10px;
+  }
+  
+  .checkboxItem {
+    width: calc(25% - 7.5px);
+    direction: rtl;
+    text-align: right;
+  }
+  
+  .footer {
+    max-height: 10%;
+    margin-top: auto;
+    padding-bottom: 0px;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  @media (max-width: 1200px) {
+    .checkboxItem {
+      width: calc(33.33% - 6.67px);
+    }
+  }
+  
+  @media (max-width: 900px) {
+    .checkboxItem {
+      width: calc(50% - 5px);
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .checkboxContainer {
+      justify-content: center;
+    }
+    .checkboxItem {
+      width: 80%;
+      text-align: right;
+    }
+  }
