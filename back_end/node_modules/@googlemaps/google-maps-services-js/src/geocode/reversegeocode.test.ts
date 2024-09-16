@@ -18,7 +18,7 @@ import axios from "axios";
 import {
   reverseGeocode,
   defaultParamsSerializer,
-  defaultUrl
+  defaultUrl,
 } from "./reversegeocode";
 
 jest.mock("axios");
@@ -33,9 +33,10 @@ test("reverseGeocode should call axios correctly", () => {
   const params = {
     latlng: {
       lat: 60.168997,
-      lng: 24.9433353
+      lng: 24.9433353,
     },
-    key: "foo"
+    key: "foo",
+    enable_address_descriptor: true
   };
 
   reverseGeocode({ params: params }, mockedAxios);
@@ -45,6 +46,6 @@ test("reverseGeocode should call axios correctly", () => {
     method: "get",
     params: params,
     paramsSerializer: defaultParamsSerializer,
-    url: defaultUrl
+    url: defaultUrl,
   });
 });
