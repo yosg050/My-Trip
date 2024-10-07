@@ -41,7 +41,7 @@ function FilterUI({ show, onHide, onFilterChange }) {
           placeholder="חפש מיקום"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          style={{ marginBottom: "30px", direction: "rtl" }}
+          style={{ marginBottom: "30px", direction: "rtl" , borderColor: '#0d6efd'}}
         />
         <Col
           xs={10}

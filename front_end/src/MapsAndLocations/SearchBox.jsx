@@ -77,17 +77,18 @@ const AutocompleteInput = ({ onPlaceSelect }) => {
           borderRadius: "4px",
           textAlign: "right",
           direction: "rtl",
+          borderColor: '#0d6efd'
         }}
       />
 
       {predictions.length > 0 && (
         <ListGroup
           style={{
-            position: "absolute", // הפוך את הרשימה לאבסולוטית
-            zIndex: 1000, // תן לה עדיפות גבוהה יותר בהצגה
-            width: "90%", // ודא שהרשימה תתאים לרוחב ה-input
-            backgroundColor: "white", // רקע לבן לרשימה
-            boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)", // הצללה קלה
+            position: "absolute",
+            zIndex: 1000, 
+            width: "90%", 
+            backgroundColor: "white", 
+            boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)", 
           }}
         >
           {predictions.map((prediction, index) => (

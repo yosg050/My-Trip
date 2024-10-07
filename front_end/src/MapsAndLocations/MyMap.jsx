@@ -4,7 +4,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import Markers from "./Marker";
 import { Spinner } from "react-bootstrap";
 import AutocompleteInput from "./SearchBox";
-import LocationModal from "./LocationModal"; // יש להוסיף את הייבוא הזה
+import LocationModal from "./LocationModal"; 
 
 const TOKEN =
   "pk.eyJ1IjoieW9zZWZnZWxsZXIiLCJhIjoiY2x2dGJtbHVwMHh2dzJxbzk5a2JueHV5YyJ9.p-P__VkKDeLIw6rXu3qzIA";
@@ -102,9 +102,14 @@ function MyMap({
 
   if (!center) {
     return (
-      <div className="flex items-center justify-center">
-        <Spinner animation="border" role="status"></Spinner>
-      </div>
+
+        <div
+          className="d-flex justify-content-center align-items-center"
+          style={{ height: "80vh" }}
+        >
+          <Spinner  variant="primary"/>
+        </div>
+   
     );
   }
 
@@ -114,7 +119,7 @@ function MyMap({
       style={{
         width: mapSize.width,
         height: mapSize.height,
-        border: "1px solid #0077b6",
+        border: "2px solid #569FFF",
         // position: "relative",
       }}
       className="rounded"

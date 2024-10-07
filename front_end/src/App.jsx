@@ -14,9 +14,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import ErrorBoundary from "./pages/ErrorBoundary";
 // export const AppContext = createContext();
 
-
 const router = createBrowserRouter([
-  
   {
     path: "/SignIn",
     element: <SignIn />,
@@ -25,11 +23,10 @@ const router = createBrowserRouter([
     path: "/",
     element: (
       <ErrorBoundary>
-
-           <ProtectedRoute>
+        <ProtectedRoute>
           <Client />
-      </ProtectedRoute>
-      </ErrorBoundary> 
+        </ProtectedRoute>
+      </ErrorBoundary>
     ),
     children: [
       {
@@ -42,9 +39,13 @@ const router = createBrowserRouter([
 function App() {
   const [user, setUser] = useState(null);
   const [site, setSite] = useState(
-<h2 className="flex items-center justify-center w-full">
-  <Spinner animation="border" variant="success" />
-</h2>  );
+    <div
+      className="d-flex justify-content-center align-items-center"
+      style={{ height: "80vh" }}
+    >
+      <Spinner variant="primary" />
+    </div>
+  );
   useEffect(() => {
     onAuthStateChanged(auth, (a) => {
       setUser(a);
@@ -55,14 +56,16 @@ function App() {
   }, [user]);
 
   return (
-    <div style={{ 
-      minHeight: '100vh',
-      // backgroundImage: `url(${backgroundImage})`,
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      backgroundRepeat: 'no-repeat',
-      backgroundAttachment: 'fixed'
-    }}>
+    <div
+      style={{
+        minHeight: "100vh",
+        // backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        backgroundAttachment: "fixed",
+      }}
+    >
       <AuthProvider>{site}</AuthProvider>
 
       {/* <AppContext.Provider value={{ user }}>{site}</AppContext.Provider> */}

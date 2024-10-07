@@ -3,7 +3,7 @@ import { useUserProfile } from "../connections/GetUserDate";
 import MyMap from "../MapsAndLocations/MyMap";
 import AddDestinationOffcanvas from "../MapsAndLocations/AddDestinationWindow";
 import Button from "react-bootstrap/Button";
-import { Map, PersonWalking, PlusLg } from "react-bootstrap-icons";
+import { Compass, Map, PersonWalking, PlusLg } from "react-bootstrap-icons";
 import TargetSearch from "../MapsAndLocations/TargetSearch";
 import { OverlayTrigger, Spinner, Tooltip } from "react-bootstrap";
 import LocationList from "../MapsAndLocations/LocationList";
@@ -12,7 +12,7 @@ import {
   filterLocationsUI,
   filterLocationsTarget,
 } from "../MapsAndLocations/filterLocationsComponent";
-import { useCenter } from "../MapsAndLocations/useCenter"; // ודא שהנתיב נכון
+import { useCenter } from "../MapsAndLocations/useCenter";
 import CustomNavbar from "../pages/Navbar";
 
 const Home = () => {
@@ -40,7 +40,7 @@ const Home = () => {
   const handleCenterChange = useCallback(
     (newCenter) => {
       // console.log("New center:", newCenter);
-      updateCenter(newCenter); 
+      updateCenter(newCenter);
     },
     [updateCenter]
   );
@@ -98,25 +98,27 @@ const Home = () => {
   const handleCloseFilterUI = () => setShowFilterUI(false);
 
 
-  // console.log(
-  //   "Rendering Home component with filtered locations:",
-  //   locationsFiltered
-  // );
-
-  if (userDataLoading || centerLoading) return <Spinner />;
+  if (userDataLoading || centerLoading)
+    return (
+      <div
+        className="d-flex justify-content-center align-items-center"
+        style={{ height: "80vh" }}
+      >
+        <Spinner variant="primary" />
+      </div>
+    );
   if (userDataError) return <p>שגיאה בטעינת המידע: {userDataError.message}</p>;
   if (centerError) return <p>{centerError}</p>;
 
-  // console.log(
-  //   "Rendering Home component with filtered locations:",
-  //   locationsFiltered
-  // );
+ 
 
   return (
     <>
-    <CustomNavbar titleData = {title}/>
-    <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
-      {/* <h2
+      <CustomNavbar titleData={title} />
+      <div
+        style={{ height: "100vh", display: "flex", flexDirection: "column",}}
+      >
+        {/* <h2
         style={{
           textAlign: "center",
           padding: "10px",
@@ -125,85 +127,99 @@ const Home = () => {
       >
         {title}
       </h2> */}
-      <div
-        style={{
-          // flexGrow: 1,
-          display: "flex",
-          overflow: "hidden",
-        }}
-      >
-        <div style={{ width: "60%", height: "100%", overflowY: "auto", margin: '7px' }}>
-          <MyMap
-            filteredLocations={locationsFiltered}
-            onCenterChange={handleCenterChange}
-            center={center}
-            onRefreshCenter={getCurrentCenter}
-            />
-        </div>
-        <div style={{ width: "33%", height: "100%", overflowY: "auto" , marginTop: '7px'}}>
-          <LocationList locations={locationsFiltered} />
-        </div>
         <div
           style={{
-            width: "7%",
-            height: "100%",
+            // flexGrow: 1,
             display: "flex",
-            flexDirection: "column",
-            justifyContent: "flex-start",
-            padding: "10px",
+            overflow: "hidden",
           }}
+        >
+          <div
+            style={{
+              width: "60%",
+              height: "100%",
+              overflowY: "auto",
+              margin: "7px",
+            }}
           >
-          <OverlayTrigger
-            placement="left"
-            overlay={<Tooltip>הצגת היעדים שלי</Tooltip>}
+            <MyMap
+              filteredLocations={locationsFiltered}
+              onCenterChange={handleCenterChange}
+              center={center}
+              onRefreshCenter={getCurrentCenter}
+            />
+          </div>
+          <div
+            style={{
+              width: "33%",
+              height: "100%",
+              overflowY: "auto",
+              marginTop: "7px",
+            }}
           >
-            <Button
-              variant="primary"
-              onClick={handleShowFilterUI}
-              style={{ marginBottom: "10px" }}
+            <LocationList locations={locationsFiltered} />
+          </div>
+          <div
+            style={{
+              width: "7%",
+              height: "100%",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "flex-start",
+              padding: "10px",
+            }}
+          >
+            <OverlayTrigger
+              placement="left"
+              overlay={<Tooltip>הצגת היעדים שלי</Tooltip>}
             >
-              <Map strokeWidth={3} width={24} height={24} />
-            </Button>
-          </OverlayTrigger>
-          <OverlayTrigger
-            placement="left"
-            overlay={<Tooltip>הוספת יעד</Tooltip>}
-            >
-            <Button
-              variant="primary"
-              onClick={handleShowOffcanvas}
-              style={{ marginBottom: "10px" }}
+              <Button
+                variant="primary"
+                onClick={handleShowFilterUI}
+                style={{ marginBottom: "10px" }}
               >
-              <PlusLg strokeWidth={3} width={24} height={24} />
-            </Button>
-          </OverlayTrigger>
-          <OverlayTrigger
-            placement="left"
-            overlay={<Tooltip>חיפוש יעד מתאים לטיול</Tooltip>}
-          >
-            <Button variant="primary" onClick={handleShowTargetSearch}>
-              <PersonWalking strokeWidth={3} width={24} height={24} />
-            </Button>
-          </OverlayTrigger>
+                <Map strokeWidth={3} width={24} height={24} />
+              </Button>
+            </OverlayTrigger>
+            <OverlayTrigger
+              placement="left"
+              overlay={<Tooltip>הוספת יעד</Tooltip>}
+            >
+              <Button
+                variant="primary"
+                onClick={handleShowOffcanvas}
+                style={{ marginBottom: "10px" }}
+              >
+                <PlusLg strokeWidth={3} width={24} height={24} />
+              </Button>
+            </OverlayTrigger>
+            <OverlayTrigger
+              placement="left"
+              overlay={<Tooltip>חיפוש יעד מתאים לטיול</Tooltip>}
+            >
+              <Button variant="primary" onClick={handleShowTargetSearch}>
+                <Compass strokeWidth={3} width={24} height={24} />
+              </Button>
+            </OverlayTrigger>
+          </div>
         </div>
-      </div>
 
-      <AddDestinationOffcanvas
-        show={showOffcanvas}
-        onHide={handleCloseOffcanvas}
+        <AddDestinationOffcanvas
+          show={showOffcanvas}
+          onHide={handleCloseOffcanvas}
         />
-      <TargetSearch
-        show={showTargetSearch}
-        onHide={handleCloseTargetSearch}
-        onFilterChange={handleTargetSearchChange}
+        <TargetSearch
+          show={showTargetSearch}
+          onHide={handleCloseTargetSearch}
+          onFilterChange={handleTargetSearchChange}
         />
-      <FilterUI
-        show={showFilterUI}
-        onHide={handleCloseFilterUI}
-        onFilterChange={handleFilterUIChange}
+        <FilterUI
+          show={showFilterUI}
+          onHide={handleCloseFilterUI}
+          onFilterChange={handleFilterUIChange}
         />
-    </div>
-        </>
+      </div>
+    </>
   );
 };
 

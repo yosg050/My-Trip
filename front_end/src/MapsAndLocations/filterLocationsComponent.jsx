@@ -40,7 +40,7 @@ export async function filterLocationsTarget(
     selectedPlacesForTrip = {},
     center = null,
     includeVisited = false,
-    transportMode = 'driving',  // הוספנו פרמטר חדש
+    transportMode = "driving",
   } = {}
 ) {
   console.log("filterLocationsTarget called with:", {
@@ -50,7 +50,7 @@ export async function filterLocationsTarget(
     selectedPlacesForTrip,
     center,
     includeVisited,
-    transportMode,  // לוג הפרמטר החדש
+    transportMode,
   });
 
   if (!Array.isArray(locations)) {
@@ -63,11 +63,12 @@ export async function filterLocationsTarget(
     ? locations
     : locations.filter((location) => !location.visit);
 
-  console.log(
-    `${includeVisited ? "Included" : "Removed"} ${locations.length - filteredLocations.length} visited locations`
-  );
+  // console.log(
+  //   `${includeVisited ? "Included" : "Removed"} ${
+  //     locations.length - filteredLocations.length
+  //   } visited locations`
+  // );
 
-  // החלת סינונים נוספים
   filteredLocations = filteredLocations.filter((location) => {
     if (!location.tripTypes || !Array.isArray(location.tripTypes)) {
       return false;
@@ -82,27 +83,27 @@ export async function filterLocationsTarget(
     return hasSelectedTypes;
   });
 
-  console.log(
-    "Filtered locations before server request:",
-    filteredLocations.map((loc) => loc.name)
-  );
+  // console.log(
+  //   "Filtered locations before server request:",
+  //   filteredLocations.map((loc) => loc.name)
+  // );
 
-  const selectedPlacesForTripEnglish = Object.keys(
-    selectedPlacesForTrip
-  ).reduce((acc, key) => {
-    if (selectedPlacesForTrip[key] === true) {
-      acc[key] = true;
-    }
-    return acc;
-  }, {});
-
+  // const selectedPlacesForTripEnglish = Object.keys(
+  //   selectedPlacesForTrip
+  // ).reduce((acc, key) => {
+  //   if (selectedPlacesForTrip[key] === true) {
+  //     acc[key] = true;
+  //   }
+  //   return acc;
+  // }, {});
+const selectedPlacesForTripObject = Object.keys(selectedPlacesForTrip)
   const searchParams = {
     selectedTypes,
     totalTravelMinutes,
-    selectedPlacesForTrip: selectedPlacesForTripEnglish,
+    selectedPlacesForTripObject,
     center,
     includeVisited,
-    transportMode,  // הוספת הפרמטר החדש לבקשת השרת
+    transportMode, 
   };
 
   console.log("Search params being sent to server:", searchParams);
@@ -132,14 +133,13 @@ export async function filterLocationsTarget(
     console.warn("Using client-side filtered results due to server error");
   }
 
-  // הסרת הבדיקה הסופית או עדכונה בהתאם ל-includeVisited
   if (!includeVisited) {
     filteredLocations = filteredLocations.filter((location) => !location.visit);
   }
 
   console.log(
     "Final filtered locations:",
-    filteredLocations.map((loc) => loc.name)
+    filteredLocations.map((loc) => loc)
   );
   return filteredLocations;
 }

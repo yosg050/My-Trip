@@ -1,6 +1,5 @@
 import express from 'express';
 import cors from 'cors';
-import getByGeo from './node_app.js';
 import searchBox from './searchBox.js';
 import placeId from './placeId.js';
 import filterLocations from './filterLocations.js';
@@ -20,14 +19,6 @@ app.use(express.json());
 app.use(cors())
 
 
-app.get('/places', async (req, res) => {
-    const { longitude, latitude } = req.query
-    await getByGeo(longitude, latitude, apiKey).then((map) => {
-        res.status(200).json(map)
-    }).catch((e) => {
-        res.status(400).send(e)
-    })
-})
 
 
 app.post('/filter-locations', async (req, res) => {

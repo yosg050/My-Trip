@@ -1,7 +1,6 @@
-
 import React, { useEffect } from "react";
 import { Marker, Popup, useMap } from "react-map-gl";
-import { GeoAltFill, PinFill, XLg } from "react-bootstrap-icons";
+import { GeoAltFill, PinFill, ThreeDots, XLg } from "react-bootstrap-icons";
 import { Card, Button } from "react-bootstrap";
 
 function Markers({ locations, onLocationUpdate, handleShow }) {
@@ -35,7 +34,7 @@ function Markers({ locations, onLocationUpdate, handleShow }) {
     <>
       {locations.map((location, index) => (
         <Marker
-          key={`marker-${index}`}
+             key={`marker-${index}`}
           longitude={location.longitude}
           latitude={location.latitude}
           anchor="bottom"
@@ -58,6 +57,7 @@ function Markers({ locations, onLocationUpdate, handleShow }) {
           onClose={() => setPopupInfo(null)}
           closeButton={false}
           closeOnClick={true}
+          style={{ margin: "0", padding: "0" }}
         >
           <Card
             style={{
@@ -66,6 +66,7 @@ function Markers({ locations, onLocationUpdate, handleShow }) {
               textAlign: "right",
               direction: "rtl",
               minWidth: "150px",
+              padding: "0px"
             }}
           >
             <div style={{ position: "absolute", top: 5, left: 5, zIndex: 1 }}>
@@ -86,14 +87,65 @@ function Markers({ locations, onLocationUpdate, handleShow }) {
             </div>
             <Card.Body style={{ padding: "10px" }}>
               <Card.Title style={{ fontSize: "1.5em" }}>
-                {popupInfo.name}
+                <span style={{ fontWeight: "bold", fontSize: "0.8em" }}>
+                  {popupInfo.name}
+                </span>
               </Card.Title>
-              <Card.Text>{popupInfo.address}</Card.Text>
+              {popupInfo.address?.length > 0 && (
+                <Card.Text style={{ lineHeight: "0.9", fontSize: "1em" }}>
+                  <span style={{ fontWeight: "bold" }}>כתובת: </span>
+                  {popupInfo.address}
+                </Card.Text>
+              )}
+              {popupInfo.tripTypes?.length > 0 && (
+                <Card.Text style={{ lineHeight: "0.9", fontSize: "1em" }}>
+                  <span style={{ fontWeight: "bold" }}>קטגוריה: </span>{" "}
+                  {popupInfo.tripTypes.join(", ")}
+                </Card.Text>
+              )}
+              {(popupInfo.durationText || popupInfo.distanceText) && (
+                <Card.Text
+                  style={{
+                    fontSize: "1em",
+                    backgroundColor: "#ffefef",
+                    // padding: "2px 6px",
+                    borderRadius: "4px",
+                    textAlign: "center",
+                    fontWeight: "bold",
+                    direction: "rtl",
+                  }}
+                >
+                  {popupInfo.transportMode
+                    ? popupInfo.transportMode
+                        .replace("bicycling", "רכיבה באופניים: ")
+                        .replace("transit", "תחבורה ציבורית: ")
+                        .replace("walking", "הליכה: ")
+                        .replace("driving", "נהיגה: ")
+                    : popupInfo.transportMode}
+                  {popupInfo.durationText
+                    ? popupInfo.durationText
+                        .replace("mins", "דק'")
+                        .replace("min", "דק'")
+                        .replace("hours", "שע' ו-")
+                        .replace("hour", "שע' ו-")
+                    : popupInfo.durationText}
+                  {popupInfo.durationText && popupInfo.distanceText && " • "}
+                  {popupInfo.distanceText &&
+                    `מרחק: ${popupInfo.distanceText.replace("km", 'ק"מ')}`}
+                </Card.Text>
+              )}
+              {popupInfo.nearbyPlaces && popupInfo.nearbyPlaces.length > 0 && (
+                <Card.Text>
+                  מקומות קרובים: {popupInfo.nearbyPlaces.length}
+                </Card.Text>
+              )}
+              {/* <Card.Text>{popupInfo.address}</Card.Text> */}
               <Button
-                variant="primary"
+                variant="outline-primary"
+                size="sm"
                 onClick={() => handleShowAndClose(popupInfo)}
               >
-                הצג
+                <ThreeDots />
               </Button>
             </Card.Body>
           </Card>

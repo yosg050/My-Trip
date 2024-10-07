@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect, useRef } from "react";
-import { Card } from "react-bootstrap";
+import { Card, Spinner } from "react-bootstrap";
 import LocationModal from "./LocationModal";
 
 function LocationList({ locations, onLocationUpdate }) {
@@ -52,8 +52,24 @@ function LocationList({ locations, onLocationUpdate }) {
     [onLocationUpdate]
   );
 
-  if (!locations || !Array.isArray(locations) || locations.length === 0) {
-    return <div>אין מיקומים להצגה</div>;
+  if (!locations || !Array.isArray(locations) ) {
+    return (
+      <div
+        className="d-flex justify-content-center align-items-center"
+        style={{ height: "80vh" }}
+      >
+        <Spinner  variant="primary"/>
+      </div>
+    );
+  }
+  if ( locations.length === 0){
+    return (<div
+    className="d-flex justify-content-center align-items-center"
+    style={{ height: "80vh" }}
+  >
+    אין מיקומים להצגה
+  </div>
+);
   }
 
   const listContainerStyle = {
@@ -91,9 +107,9 @@ function LocationList({ locations, onLocationUpdate }) {
       </style>
       <div id="locationListContainer" style={listContentStyle}>
         {locations.map((location, index) => (
-          <Card 
-            key={index} 
-            style={{ width: "100%", marginBottom: "10px"  }}
+          <Card
+            key={index}
+            style={{ width: "100%", marginBottom: "10px" }}
             className="clickable-card"
             onClick={() => handleCardClick(location)}
           >
@@ -105,7 +121,9 @@ function LocationList({ locations, onLocationUpdate }) {
                   alignItems: "center",
                 }}
               >
-                <span style={{fontWeight: "bold", fontSize: "0.8em"}}>{location.name}</span>
+                <span style={{ fontWeight: "bold", fontSize: "0.8em" }}>
+                  {location.name}
+                </span>
                 <span
                   style={{
                     fontSize: "0.8em",
@@ -119,16 +137,12 @@ function LocationList({ locations, onLocationUpdate }) {
                 </span>
               </Card.Title>
               <Card.Text style={{ lineHeight: "1", fontSize: "0.9em" }}>
-                <span style={{ fontWeight: "bold" }}>
-                  כתובת:{" "}
-                </span>
+                <span style={{ fontWeight: "bold" }}>כתובת: </span>
                 {location.address}
               </Card.Text>
               {location.tripTypes?.length > 0 && (
                 <Card.Text style={{ lineHeight: "0.8", fontSize: "0.9em" }}>
-                  <span style={{ fontWeight: "bold" }}>
-                    קטגוריה:{" "}
-                  </span>{" "}
+                  <span style={{ fontWeight: "bold" }}>קטגוריה: </span>{" "}
                   {location.tripTypes.join(", ")}
                 </Card.Text>
               )}
@@ -145,10 +159,11 @@ function LocationList({ locations, onLocationUpdate }) {
                   }}
                 >
                   {location.transportMode
-                    ? location.transportMode.replace("bicycling", "רכיבה באופניים: ")
-                      .replace("transit", "תחבורה ציבורית: ")
-                      .replace("walking", "הליכה: ")
-                      .replace("driving", "נהיגה: ")
+                    ? location.transportMode
+                        .replace("bicycling", "רכיבה באופניים: ")
+                        .replace("transit", "תחבורה ציבורית: ")
+                        .replace("walking", "הליכה: ")
+                        .replace("driving", "נהיגה: ")
                     : location.transportMode}
                   {location.durationText
                     ? location.durationText

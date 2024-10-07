@@ -163,7 +163,7 @@ function UserStatus() {
             </Col>
           </Row>
 
-          <Form.Group className="mb-3" controlId="formChildren">
+          <Form.Group className="mb-3" >
             <Form.Label>ילדים</Form.Label>
             {children.map((child, index) => (
               <div key={index} className="mb-2">

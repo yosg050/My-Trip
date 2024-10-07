@@ -18,7 +18,7 @@ import {
 } from "react-bootstrap-icons";
 import Settings from "../components/Settings";
 import emailjs from "emailjs-com";
-import Footer from "./Footer";
+// import Footer from "./Footer";
 
 const Client = () => {
   const [sideMenuHovered, setSideMenuHovered] = useState(false);
@@ -28,9 +28,9 @@ const Client = () => {
   const [message, setMessage] = useState("");
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
-  const UserProfileComponent = () => {
-    const { userData, locations, loading, error } = useUserProfile();
-  };
+  // const UserProfileComponent = () => {
+  //   const { userData, locations, loading, error } = useUserProfile();
+  // };
 
   const { user } = useAuth();
   const userId = user.email;
@@ -73,7 +73,7 @@ const Client = () => {
         {/* <Navbar /> */}
 
         <Outlet context={{ setShowContact }} />
-        <Footer />
+        {/* <Footer /> */}
       </UserProfileProvider>
     </div>
   );

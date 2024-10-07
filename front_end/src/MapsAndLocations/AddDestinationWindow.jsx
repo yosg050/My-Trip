@@ -138,6 +138,7 @@ function AddDestinationWindow({ show, onHide }) {
               <AutocompleteInput
                 onPlaceSelect={handlePlaceSelect}
                 onInputChange={handleInputChange}
+             
               />
             </Col>
           </Row>

@@ -33,9 +33,6 @@ const UserTestAndExit = () => {
   return (
     <div>
       {user && (
-        // <Button variant="danger" className="me-2" onClick={handleSignOut}>
-        //   <BoxArrowLeft strokeWidth={3} width={24} height={24} />
-        // </Button>
         <Dropdown.Item as="button" onClick={handleSignOut}>
           <BoxArrowLeft className="me-2" /> יציאה
         </Dropdown.Item>
