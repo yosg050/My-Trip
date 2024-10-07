@@ -5,11 +5,6 @@ import placeId from './placeId.js';
 import filterLocations from './filterLocations.js';
 import { apiKeyG} from './apiKey.js';
 
-// import dotenv from 'dotenv';
-// dotenv.config();
-// console.log('All environment variables:', process.env);
-// const apiKey = process.env.API_KEY_SPACE;
-
 const apiKey = apiKeyG;
 const app = express();
 const router = express.Router();
