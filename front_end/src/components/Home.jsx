@@ -13,9 +13,13 @@ import {
   filterLocationsTarget,
 } from "../MapsAndLocations/filterLocationsComponent";
 import { useCenter } from "../MapsAndLocations/useCenter";
-import CustomNavbar from "../pages/Navbar";
+import logoImage from "../assets/logo2.png";
+import ProfileButton from "./ImegeButton";
+import useMobile from "./UseMobile";
 
 const Home = () => {
+  const isMobile = useMobile();
+
   const [locationsFiltered, setLocationsFiltered] = useState([]);
   const {
     userData,
@@ -30,12 +34,15 @@ const Home = () => {
     getCurrentCenter,
     updateCenter,
   } = useCenter();
+
   const [showOffcanvas, setShowOffcanvas] = useState(false);
   const [showTargetSearch, setShowTargetSearch] = useState(false);
   const [showFilterUI, setShowFilterUI] = useState(false);
   const [activeFilter, setActiveFilter] = useState(null);
   const [filterParams, setFilterParams] = useState({});
-  const [title, setTitle] = useState("רשימת היעדים שלי");
+  const listLocations = "רשימת היעדים שלי";
+  const choiceLocations = "בחירת יעד מתאים";
+  const [title, setTitle] = useState(listLocations);
 
   const handleCenterChange = useCallback(
     (newCenter) => {
@@ -63,19 +70,13 @@ const Home = () => {
     }
   }, [locations, activeFilter, filterParams, center]);
 
-  useEffect(() => {
-    // console.log("Current locations:", locations);
-    // console.log("Current locationsFiltered:", locationsFiltered);
-  }, [locations, locationsFiltered]);
+  useEffect(() => {}, [locations, locationsFiltered]);
 
   const handleFilterUIChange = (params) => {
-    // console.log("FilterUI params:", params);
     setActiveFilter("UI");
     setFilterParams(params);
-    setTitle("רשימת היעדים שלי");
-    // console.log("Calling filterLocationsUI with params:", params);
+    setTitle(listLocations);
     const filteredResult = filterLocationsUI(locations, params);
-    // console.log("Filtered result:", filteredResult);
     setLocationsFiltered(filteredResult);
   };
 
@@ -83,11 +84,7 @@ const Home = () => {
     console.log("Home: Received params from TargetSearch:", params);
     setActiveFilter("Target");
     setFilterParams(params);
-    setTitle("בחירת יעד מתאים");
-    // console.log(
-    //   "Home: Updated state - activeFilter: 'Target', filterParams:",
-    //   params
-    // );
+    setTitle(choiceLocations);
   };
 
   const handleShowOffcanvas = () => setShowOffcanvas(true);
@@ -97,49 +94,74 @@ const Home = () => {
   const handleShowFilterUI = () => setShowFilterUI(true);
   const handleCloseFilterUI = () => setShowFilterUI(false);
 
-
   if (userDataLoading || centerLoading)
     return (
-      <div
-        className="d-flex justify-content-center align-items-center"
-        style={{ height: "80vh" }}
-      >
-        <Spinner variant="primary" />
+      <div style={{ height: "80vh" }}>
+        <Spinner variant="outline-primary" />
       </div>
     );
   if (userDataError) return <p>שגיאה בטעינת המידע: {userDataError.message}</p>;
   if (centerError) return <p>{centerError}</p>;
 
- 
+  const refreshButton = () => {
+    window.location.reload();
+  };
 
   return (
     <>
-      <CustomNavbar titleData={title} />
       <div
-        style={{ height: "100vh", display: "flex", flexDirection: "column",}}
-      >
-        {/* <h2
         style={{
-          textAlign: "center",
-          padding: "10px",
-          borderBottom: "1px solid #dee2e6",
+          height: "100vh",
+          width: "100vw",
+          display: "flex",
+          flexDirection: "column",
+          marginTop: "5px",
         }}
       >
-        {title}
-      </h2> */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginLeft: "1%",
+            marginRight: "1%",
+            marginBottom: "1px",
+          }}
+        >
+          <ProfileButton />
+          <h2
+            style={{
+              fontWeight: "bold",
+              fontSize: "clamp(12px, 5vw, 38px",
+              textAlign: "center",
+              // textShadow: "1px 1px 2px rgba(0,0,0,0.5)",
+              alignSelf: "end",
+            }}
+          >
+            {title}
+          </h2>
+          <div>
+            <Button variant="link" onClick={refreshButton}>
+              <img src={logoImage} width="150" height="60" alt="MyTrip Logo" />
+            </Button>
+          </div>
+        </div>
+
         <div
           style={{
             // flexGrow: 1,
             display: "flex",
             overflow: "hidden",
+            flexDirection: isMobile ? "column" : "row",
           }}
         >
           <div
             style={{
-              width: "60%",
+              width: "58%",
               height: "100%",
               overflowY: "auto",
-              margin: "7px",
+              marginRight: "7px",
+              marginLeft: "2px",
             }}
           >
             <MyMap
@@ -151,22 +173,26 @@ const Home = () => {
           </div>
           <div
             style={{
-              width: "33%",
+              width: "35%",
               height: "100%",
               overflowY: "auto",
-              marginTop: "7px",
+              // marginTop: "7px",
+              scrollbarWidth: "none", // Firefox
+              msOverflowStyle: "none", // Internet Explorer 10+
             }}
           >
             <LocationList locations={locationsFiltered} />
           </div>
           <div
             style={{
-              width: "7%",
+              width: "5%",
               height: "100%",
               display: "flex",
-              flexDirection: "column",
+              flexDirection: isMobile ? "row" : "column",
               justifyContent: "flex-start",
-              padding: "10px",
+              // padding: "10px",
+              alignItems: "center",
+              marginTop: "10px",
             }}
           >
             <OverlayTrigger
@@ -174,9 +200,10 @@ const Home = () => {
               overlay={<Tooltip>הצגת היעדים שלי</Tooltip>}
             >
               <Button
-                variant="primary"
+                variant="outline-primary"
+                size="lg"
                 onClick={handleShowFilterUI}
-                style={{ marginBottom: "10px" }}
+                style={{ margin: "10px" }}
               >
                 <Map strokeWidth={3} width={24} height={24} />
               </Button>
@@ -186,18 +213,29 @@ const Home = () => {
               overlay={<Tooltip>הוספת יעד</Tooltip>}
             >
               <Button
-                variant="primary"
+                variant="outline-primary"
+                size="lg"
                 onClick={handleShowOffcanvas}
-                style={{ marginBottom: "10px" }}
+                style={{ margin: "10px" }}
               >
                 <PlusLg strokeWidth={3} width={24} height={24} />
               </Button>
             </OverlayTrigger>
             <OverlayTrigger
               placement="left"
-              overlay={<Tooltip>חיפוש יעד מתאים לטיול</Tooltip>}
+              overlay={
+                <Tooltip>
+                  חיפוש יעד <br />
+                  מתאים לטיול
+                </Tooltip>
+              }
             >
-              <Button variant="primary" onClick={handleShowTargetSearch}>
+              <Button
+                variant="outline-primary"
+                size="lg"
+                onClick={handleShowTargetSearch}
+                style={{ margin: "10px" }}
+              >
                 <Compass strokeWidth={3} width={24} height={24} />
               </Button>
             </OverlayTrigger>

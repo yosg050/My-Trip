@@ -1,7 +1,7 @@
 import React, { useRef, useCallback } from "react";
 import { Button, Image, Container, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { uploadImage } from "../DB/firebaseStorage";
-import { FilePlus } from "react-bootstrap-icons";
+import { PlusCircleDotted } from "react-bootstrap-icons";
 
 function LocationImage({ location, user, onImageUpload }) {
   const fileInputRef = useRef(null);
@@ -43,8 +43,8 @@ function LocationImage({ location, user, onImageUpload }) {
             placement="top"
             overlay={<Tooltip>עדיין אין תמונה <br/> ניתן להוסיף תמונות שלך</Tooltip>}
           >
-            <Button onClick={handleButtonClick} variant="outline-primary">
-              +
+            <Button variant="link"  onClick={handleButtonClick}  >
+              <PlusCircleDotted size={30}/>
             </Button>
           </OverlayTrigger>
           <input

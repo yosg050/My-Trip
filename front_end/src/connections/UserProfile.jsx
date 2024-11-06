@@ -34,24 +34,7 @@ const UserProfileDisplay = () => {
     }
 
 
-    return (
-        <div>
-            {/* <h2>פרטי משתמש:</h2>
-            {userData && (
-                <div>
-                    <p>שם: {userData.Name}</p>
-                    <p>אימייל: {user.email}</p>
-                </div>  
-            )} */}
-
-            {/* <h2>מיקומים:</h2> */}
-            {/* <ul>
-                {locations.map((location, index) => (
-                    <li key={index}>{JSON.stringify(location)}</li>
-                ))}
-            </ul> */}
-        </div>
-    );
+ 
 };
 
 export default UserProfileDisplay;

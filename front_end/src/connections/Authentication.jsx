@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { auth } from "../../firebaseConfig";
 import SignUp from "./NewUser";
 import { useAuth } from "./AuthContext";
-import logoImage from "../assets/logo.jpg";
+import logoImage from "../assets/logo2.png";
 import Image from "react-bootstrap/Image";
 import { Alert, Button, Col, Form, Row } from "react-bootstrap";
 import handleResetPassword from "./resetPasswordEmail";
@@ -55,7 +55,7 @@ const SignIn = () => {
         justifyContent: "center",
         textAlign: "center",
         alignItems: "center",
-        marginTop: "5%",
+        marginTop: "30%",
       }}
     >
       <Col
@@ -71,9 +71,9 @@ const SignIn = () => {
           <Image
             src={logoImage}
             rounded
-            style={{ width: "120px", height: "120px" }}
+            style={{ width: "300px", height: "120px" }}
           />
-          <h2
+          {/* <h2
             style={{
               fontWeight: "bold",
               fontSize: "1.5rem",
@@ -82,7 +82,7 @@ const SignIn = () => {
             }}
           >
             MyTrip
-          </h2>
+          </h2> */}
           <Form.Group className="mt-3" controlId="formPlaintextEmail">
             <Form.Label>מייל</Form.Label>
             <Form.Control
@@ -108,7 +108,7 @@ const SignIn = () => {
             שכחתי סיסמה
           </a>
           <div className="d-grid gap-2">
-            <Button style={{ marginTop: "23px" }}>התחברות</Button>
+            <Button   type="submit" style={{ marginTop: "23px" }}>התחברות</Button>
             <Button onClick={handleGoogleSignIn} style={{ marginTop: "23px" }}>
               Google התחברות באמצעות חשבון
             </Button>

@@ -1,8 +1,8 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from "react";
 
 const DEFAULT_CENTER = {
   latitude: 31.7798,
-  longitude: 35.2087
+  longitude: 35.2087,
 };
 
 export const useCenter = () => {
@@ -18,12 +18,12 @@ export const useCenter = () => {
 
   const getCurrentCenter = useCallback(() => {
     setLoading(true);
-    if ("geolocation" in navigator) { // שינוי מ-"geoCenter" ל-"geolocation"
+    if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          updateCenter({ // שינוי מ-updateLocation ל-updateCenter
+          updateCenter({
             latitude: position.coords.latitude,
-            longitude: position.coords.longitude
+            longitude: position.coords.longitude,
           });
         },
         (error) => {
@@ -43,6 +43,10 @@ export const useCenter = () => {
   useEffect(() => {
     getCurrentCenter();
   }, [getCurrentCenter]);
+  // if (center) {
+  //   return 
+
+  // }
 
   return { center, loading, error, getCurrentCenter, updateCenter };
 };

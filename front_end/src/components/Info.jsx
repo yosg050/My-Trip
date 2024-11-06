@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Button, Col, Modal, Row, Tab, Tabs } from "react-bootstrap";
 import { Github, Linkedin, Whatsapp } from "react-bootstrap-icons";
+import logoImage from "../assets/logo2.png";
 
 export default function Info({ show, handleClose }) {
   useEffect(() => {
@@ -65,57 +66,53 @@ export default function Info({ show, handleClose }) {
           <Tab eventKey="יצירת קשר" title="יצירת קשר">
             <div
               style={{
+                textAlign: "center",
+                marginTop: "10%",
+              }}
+            >
+              {/* <img
+                src={logoImage}
+                width="225"
+                height="90"
+                alt="MyTrip Logo"
+              ></img>
+            </div>
+            <div
+              style={{
                 display: "flex",
                 textAlign: "center",
                 flexDirection: "column",
                 justifyContent: "space-evenly",
-                marginTop: "10%"
-      
+                marginTop: "10%",
               }}
-            >
+            > */}
               <Row>
-                {/* <Col>
-                  <Button
-                    variant="link"
-                    style={{ width: "fit-content" }}
-                    onClick={() =>
-                      window.open(
-                        "https://www.linkedin.com/in/israelb8411890",
-                
-                      )
-                    }
-                  >
-                    <Linkedin strokeWidth={3} width={24} height={24} />
-                  </Button>
-                  <p>ישראל בוכבינדר</p>
-                </Col> */}
                 <Col>
                   <Button
                     variant="link"
                     style={{ width: "fit-content" }}
                     onClick={() =>
-                      window.open(
-                        "https://www.linkedin.com/in/yosefgeller",
-                   
-                      )
+                      window.open("https://www.linkedin.com/in/yosefgeller")
                     }
                   >
                     <Linkedin strokeWidth={3} width={24} height={24} />
                   </Button>
-               <p>Linkedin</p>   {/* <p>יוסף גלר</p> */}
+                  <p>Linkedin</p>
                 </Col>
                 <Col>
                   <Button
                     variant="link"
                     style={{ width: "fit-content" }}
                     onClick={() =>
-                      window.open(
-                        "https://wa.me/message/4BAFYQ42O6OVH1",
-                 
-                      )
+                      window.open("https://wa.me/message/4BAFYQ42O6OVH1")
                     }
                   >
-                    <Whatsapp strokeWidth={3} width={24} height={24} color="#25D366" />
+                    <Whatsapp
+                      strokeWidth={3}
+                      width={24}
+                      height={24}
+                      color="#25D366"
+                    />
                   </Button>
                   <p>Whatsapp </p>
                 </Col>
@@ -123,14 +120,14 @@ export default function Info({ show, handleClose }) {
                   <Button
                     variant="link"
                     style={{ width: "fit-content" }}
-                    onClick={() =>
-                      window.open(
-                        "https://github.com/yosg050",
-                 
-                      )
-                    }
+                    onClick={() => window.open("https://github.com/yosg050")}
                   >
-                    <Github strokeWidth={3} width={24} height={24} color="block" />
+                    <Github
+                      strokeWidth={3}
+                      width={24}
+                      height={24}
+                      color="block"
+                    />
                   </Button>
                   <p>Github </p>
                 </Col>

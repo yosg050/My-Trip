@@ -36,7 +36,7 @@ function MyMap({
     latitude: center.latitude,
     zoom: 15,
   });
-  const [mapSize, setMapSize] = useState({ width: "100%", height: "80vh" });
+  const [mapSize, setMapSize] = useState({ width: "100%", height: "88vh" });
   const mapContainerRef = useRef(null);
   const mapRef = useRef();
   const [popupInfo, setPopupInfo] = useState(null);
@@ -51,7 +51,7 @@ function MyMap({
 
       setMapSize({
         width: `${offsetWidth}px`,
-        height: `${Math.floor(windowHeight * 0.8) - bottomMargin}px`,
+        height: `${Math.floor(windowHeight * 0.88) - bottomMargin}px`,
       });
     }
   }, []);
@@ -66,7 +66,7 @@ function MyMap({
     setViewState({
       longitude: center.longitude,
       latitude: center.latitude,
-      zoom: 15,
+      zoom: 12,
     });
   }, [center]);
 
@@ -105,7 +105,7 @@ function MyMap({
 
         <div
           className="d-flex justify-content-center align-items-center"
-          style={{ height: "80vh" }}
+          style={{ height: "90vh" }}
         >
           <Spinner  variant="primary"/>
         </div>
@@ -119,7 +119,7 @@ function MyMap({
       style={{
         width: mapSize.width,
         height: mapSize.height,
-        border: "2px solid #569FFF",
+        // border: "2px solid #569FFF",
         // position: "relative",
       }}
       className="rounded"
@@ -159,7 +159,7 @@ function MyMap({
             onClose={() => setPopupInfo(null)}
             offset={[0, -10]}
           >
-            <div>מיקום נוכחי</div>
+            <div >מיקום נוכחי</div>
           </Popup>
         )}
         <div
@@ -167,15 +167,14 @@ function MyMap({
             position: "absolute",
             top: 10,
             left: 10,
-            padding: "10px",
+            padding: "5px",
             backgroundColor: "white",
-            borderRadius: "4px",
             boxShadow: "0 0 10px rgba(0,0,0,0.1)",
             zIndex: 1,
             textAlign: "end",
           }}
         >
-          <p style={{ marginBottom: "0px" }}>שינוי מיקום</p>
+          <p style={{ marginBottom: "0px" , lineHeight: "0.9",}}>שינוי נקודת מוצא</p>
           <AutocompleteInput onPlaceSelect={handlePlaceSelect} />
         </div>
       </Map>

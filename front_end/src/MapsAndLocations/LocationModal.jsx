@@ -23,6 +23,7 @@ import {
 } from "react-bootstrap-icons";
 import LocationImage from "./LocationImage";
 import placesData from "../../LocationsHebrewEnglish";
+import Navigation from "./Navigation";
 // const placesDataSingle = placesData;
 
 const englishToHebrew = {};
@@ -31,7 +32,7 @@ placesData.forEach((Item) => {
 });
 
 function convertTypeToHebrew(englishType) {
-  return englishToHebrew[englishType] || englishType; // אם אין תרגום, מחזיר את הערך המקורי
+  return englishToHebrew[englishType] || englishType; 
 }
 function LocationModal({ show, handleClose, location }) {
   const [updating, setUpdating] = useState(false);
@@ -153,6 +154,7 @@ function LocationModal({ show, handleClose, location }) {
   if (!location) return null;
 
   return (
+    <>
     <Modal
       show={show}
       onHide={handleClose}
@@ -270,8 +272,8 @@ function LocationModal({ show, handleClose, location }) {
                       maxHeight: "30vh",
                       overflow: "auto",
                       scrollbarWidth: "none",
-                      // alignItems: "center",
-                      // justifyContent: "center",
+                      alignItems: "center",
+                      justifyContent: "center",
                     }}
                   >
                     <ul>
@@ -406,25 +408,19 @@ function LocationModal({ show, handleClose, location }) {
       </Modal.Body>
 
       <Modal.Footer style={{ justifyContent: "center" }}>
-        <OverlayTrigger placement="top" overlay={<Tooltip>נווט ליעד</Tooltip>}>
-          <Button
-            variant="outline-info"
-            // onClick={handleDelete}
-            disabled={deleting}
-          >
-            {deleting ? "שולח מיקום..." : <Compass />}
-          </Button>
-        </OverlayTrigger>
-        <OverlayTrigger placement="top" overlay={<Tooltip>שתף</Tooltip>}>
+
+      <Navigation location={location} />
+     
+        <OverlayTrigger placement="bottom" overlay={<Tooltip>שתף</Tooltip>}>
           <Button
             variant="outline-warning"
             // onClick={handleDelete}
             disabled={deleting}
-          >
+            >
             {deleting ? "משתף..." : <Share />}
           </Button>
         </OverlayTrigger>
-        <OverlayTrigger placement="top" overlay={<Tooltip>מחק מיקום</Tooltip>}>
+        <OverlayTrigger placement="bottom" overlay={<Tooltip>מחק מיקום</Tooltip>}>
           <Button
             variant="outline-danger"
             onClick={handleDelete}
@@ -436,9 +432,9 @@ function LocationModal({ show, handleClose, location }) {
 
         {!location.visit && (
           <OverlayTrigger
-            placement="top"
+            placement="bottom"
             overlay={<Tooltip>ביקרתי פה</Tooltip>}
-          >
+            >
             <Button
               variant="outline-success"
               onClick={visitedTrue}
@@ -458,13 +454,15 @@ function LocationModal({ show, handleClose, location }) {
               variant="outline-danger"
               onClick={visitedFalse}
               disabled={updating}
-            >
+              >
               {updating ? "מעדכן..." : <Pin />}
             </Button>
           </OverlayTrigger>
         )}
       </Modal.Footer>
     </Modal>
+    {/* <Navigation /> */}
+    </>
   );
 }
 

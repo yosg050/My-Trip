@@ -13,7 +13,7 @@ function LocationList({ locations, onLocationUpdate }) {
       const { offsetWidth } = listContainerRef.current.parentElement;
       const windowHeight = window.innerHeight;
       const topMargin = 20; // Adjust this value based on your layout
-      const bottomMargin = 40; // Adjust this value to increase/decrease bottom margin
+      const bottomMargin = 0; // Adjust this value to increase/decrease bottom margin
 
       setListSize({
         width: `${offsetWidth}px`,
@@ -56,7 +56,7 @@ function LocationList({ locations, onLocationUpdate }) {
     return (
       <div
         className="d-flex justify-content-center align-items-center"
-        style={{ height: "80vh" }}
+        style={{ height: "90vh" }}
       >
         <Spinner  variant="primary"/>
       </div>
@@ -65,7 +65,7 @@ function LocationList({ locations, onLocationUpdate }) {
   if ( locations.length === 0){
     return (<div
     className="d-flex justify-content-center align-items-center"
-    style={{ height: "80vh" }}
+    style={{ height: "90vh" }}
   >
     אין מיקומים להצגה
   </div>
@@ -109,7 +109,7 @@ function LocationList({ locations, onLocationUpdate }) {
         {locations.map((location, index) => (
           <Card
             key={index}
-            style={{ width: "100%", marginBottom: "10px" }}
+            style={{ width: "100%", marginBottom: "10px", }}
             className="clickable-card"
             onClick={() => handleCardClick(location)}
           >
