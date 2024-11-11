@@ -26,9 +26,9 @@ const PinIcon = ({ size = 24, color = "currentColor" }) => (
 
 function MyMap({
   filteredLocations,
-  onCenterChange,
+  // onCenterChange,
   center,
-  onRefreshLocation,
+  // onRefreshLocation,
   onLocationUpdate,
 }) {
   const [viewState, setViewState] = useState({
@@ -36,7 +36,7 @@ function MyMap({
     latitude: center.latitude,
     zoom: 15,
   });
-  const [mapSize, setMapSize] = useState({ width: "100%", height: "88vh" });
+  const [mapSize, setMapSize] = useState({ width: "100%", height: "90vh" });
   const mapContainerRef = useRef(null);
   const mapRef = useRef();
   const [popupInfo, setPopupInfo] = useState(null);
@@ -51,7 +51,8 @@ function MyMap({
 
       setMapSize({
         width: `${offsetWidth}px`,
-        height: `${Math.floor(windowHeight * 0.88) - bottomMargin}px`,
+        height: '100%'
+        // `${Math.floor(windowHeight * 0.88) - bottomMargin}px`,
       });
     }
   }, []);
@@ -70,13 +71,13 @@ function MyMap({
     });
   }, [center]);
 
-  const handlePlaceSelect = (selectedPlace) => {
-    const newLocation = {
-      latitude: selectedPlace.latitude,
-      longitude: selectedPlace.longitude,
-    };
-    onCenterChange(newLocation);
-  };
+  // const handlePlaceSelect = (selectedPlace) => {
+  //   const newLocation = {
+  //     latitude: selectedPlace.latitude,
+  //     longitude: selectedPlace.longitude,
+  //   };
+  //   onCenterChange(newLocation);
+  // };
 
   const handleShow = useCallback((location) => {
     setSelectedLocation(location);
@@ -119,8 +120,7 @@ function MyMap({
       style={{
         width: mapSize.width,
         height: mapSize.height,
-        // border: "2px solid #569FFF",
-        // position: "relative",
+
       }}
       className="rounded"
     >
@@ -129,7 +129,7 @@ function MyMap({
         mapboxAccessToken={TOKEN}
         {...viewState}
         onMove={(evt) => setViewState(evt.viewState)}
-        style={{ width: "100%", height: "100%" }}
+        style={{ width: "100%", height: "98%" }}
         mapStyle="mapbox://styles/mapbox/streets-v12"
       >
         <Markers
@@ -162,7 +162,7 @@ function MyMap({
             <div >מיקום נוכחי</div>
           </Popup>
         )}
-        <div
+        {/* <div
           style={{
             position: "absolute",
             top: 10,
@@ -176,7 +176,7 @@ function MyMap({
         >
           <p style={{ marginBottom: "0px" , lineHeight: "0.9",}}>שינוי נקודת מוצא</p>
           <AutocompleteInput onPlaceSelect={handlePlaceSelect} />
-        </div>
+        </div> */}
       </Map>
       <LocationModal
         show={showModal}

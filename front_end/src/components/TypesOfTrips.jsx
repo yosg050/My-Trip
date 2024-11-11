@@ -18,20 +18,20 @@ export default function TripTypes() {
     if (userData && userData.typesOfTrips) {
       setSelectedTripTypes(userData.typesOfTrips);
       const customTypes = Object.keys(userData.typesOfTrips).filter(
-        type => !initialTripTypes.includes(type)
+        (type) => !initialTripTypes.includes(type)
       );
       setCustomTripTypes(customTypes);
     }
   }, [userData]);
 
   const handleCheckboxChange = (tripType, isChecked) => {
-    setSelectedTripTypes(prev => ({ ...prev, [tripType]: isChecked }));
+    setSelectedTripTypes((prev) => ({ ...prev, [tripType]: isChecked }));
   };
 
   const handleAddTripType = () => {
     if (newTripType && !customTripTypes.includes(newTripType)) {
-      setCustomTripTypes(prev => [...prev, newTripType]);
-      setSelectedTripTypes(prev => ({ ...prev, [newTripType]: true }));
+      setCustomTripTypes((prev) => [...prev, newTripType]);
+      setSelectedTripTypes((prev) => ({ ...prev, [newTripType]: true }));
       setNewTripType("");
     }
   };
@@ -43,7 +43,7 @@ export default function TripTypes() {
     }
 
     try {
-      const userDocRef = doc(db, "Users", user.email);
+      const userDocRef = doc(db, "Users", user.uid);
       await setDoc(
         userDocRef,
         {
@@ -63,43 +63,53 @@ export default function TripTypes() {
   if (error) return <div>שגיאה בטעינת הנתונים: {error.message}</div>;
 
   return (
-    <div style={{
-      display: 'flex',
-      flexDirection: 'column',
-      height: '60vh',
-      maxWidth: '100vw',
-      margin: '0 auto',
-      position: 'relative'
-    }}>
-      <div style={{textAlign: 'center', marginBottom: '20px'}}>
-        <h2>קטגוריות</h2>
-        <p>הוסף את הקטגוריות לטיולים המועדפות עליך  </p>
-      </div>
-      <div style={{
-        maxHeight: "calc(100vh - 200px)",
-        overflowY: "auto",
-        marginBottom: "20px",
+    <div
+      style={{
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
-      }}>
-        <Form style={{width: '100%', maxWidth: '100px'}}>
+        height: "60vh",
+        maxWidth: "100vw",
+        margin: "0 auto",
+        position: "relative",
+      }}
+    >
+      <div style={{ textAlign: "center", marginBottom: "20px" }}>
+        <p style={{ fontWeight: "bold", fontSize: "1.5em", lineHeight: "1" }}>
+          קטגוריות
+        </p>
+        <p style={{ fontSize: "1em", lineHeight: "1" }}>
+          הוסף את הקטגוריות לטיולים המועדפות עליך{" "}
+        </p>
+      </div>
+      <div
+        style={{
+          maxHeight: "calc(100vh - 200px)",
+          overflowY: "auto",
+          marginBottom: "20px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Form style={{ width: "100%", maxWidth: "100px" }}>
           {[...initialTripTypes, ...customTripTypes].map((tripType) => (
-            <div key={tripType} >
+            <div key={tripType}>
               <Form.Check
                 type="switch"
                 id={tripType}
                 checked={selectedTripTypes[tripType] || false}
                 label={tripType}
-                onChange={(e) => handleCheckboxChange(tripType, e.target.checked)}
+                onChange={(e) =>
+                  handleCheckboxChange(tripType, e.target.checked)
+                }
                 reverse
               />
             </div>
           ))}
         </Form>
       </div>
-      <div style={{ display: 'flex', justifyContent: 'center'}}>
-        <InputGroup style={{ width: '300px' }}>
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <InputGroup style={{ width: "300px" }}>
           <Form.Control
             placeholder="הוסף קטגוריה חדשה"
             value={newTripType}
@@ -112,7 +122,7 @@ export default function TripTypes() {
       </div>
       <Modal.Footer
         style={{
-          position: 'absolute',
+          position: "absolute",
           bottom: 0,
           left: 0,
           right: 0,
@@ -120,7 +130,7 @@ export default function TripTypes() {
           paddingBottom: "10px",
           justifyContent: "center",
           alignItems: "center",
-          backgroundColor: 'white'
+          backgroundColor: "white",
         }}
       >
         <Button onClick={saveToFirestore}>שמור העדפות</Button>

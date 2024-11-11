@@ -18,8 +18,9 @@ function FilterUI({ show, onHide, onFilterChange }) {
   }, [visited, notVisited, searchTerm]);
 
   const handleReset = () => {
-    setVisited(true);
-    setNotVisited(true);
+
+    setVisited(false);
+    setNotVisited(false);
     setSearchTerm("");
   };
 

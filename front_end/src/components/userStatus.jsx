@@ -48,7 +48,7 @@ function UserStatus() {
     }
 
     try {
-      const userDocRef = doc(db, "Users", user.email);
+      const userDocRef = doc(db, "Users", user.uid);
       await setDoc(
         userDocRef,
         {

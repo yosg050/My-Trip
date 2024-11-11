@@ -24,6 +24,7 @@ import {
 import LocationImage from "./LocationImage";
 import placesData from "../../LocationsHebrewEnglish";
 import Navigation from "./Navigation";
+import Sharing from "./Sharing";
 // const placesDataSingle = placesData;
 
 const englishToHebrew = {};
@@ -40,7 +41,7 @@ function LocationModal({ show, handleClose, location }) {
   const { user } = useAuth();
 
   const visitedTrue = useCallback(async () => {
-    if (!user?.email || !location?.id) {
+    if (!user?.uid || !location?.id) {
       console.error("Missing required fields for update");
       return;
     }
@@ -50,7 +51,7 @@ function LocationModal({ show, handleClose, location }) {
       const locationRef = doc(
         db,
         "Users",
-        user.email,
+        user.uid,
         "Locations",
         location.id
       );
@@ -69,7 +70,7 @@ function LocationModal({ show, handleClose, location }) {
   }, [user, location, handleClose]);
 
   const visitedFalse = useCallback(async () => {
-    if (!user?.email || !location?.id) {
+    if (!user?.uid || !location?.id) {
       console.error("Missing required fields for update");
       return;
     }
@@ -79,7 +80,7 @@ function LocationModal({ show, handleClose, location }) {
       const locationRef = doc(
         db,
         "Users",
-        user.email,
+        user.uid,
         "Locations",
         location.id
       );
@@ -98,7 +99,7 @@ function LocationModal({ show, handleClose, location }) {
   }, [user, location, handleClose]);
 
   const handleDelete = useCallback(async () => {
-    if (!user?.email || !location?.id) {
+    if (!user?.uid || !location?.id) {
       console.error("Missing required fields for delete");
       return;
     }
@@ -108,7 +109,7 @@ function LocationModal({ show, handleClose, location }) {
       const locationRef = doc(
         db,
         "Users",
-        user.email,
+        user.uid,
         "Locations",
         location.id
       );
@@ -125,7 +126,7 @@ function LocationModal({ show, handleClose, location }) {
 
   const handleImageUpload = useCallback(
     async (downloadURL) => {
-      if (!user?.email || !location?.id) {
+      if (!user?.uid || !location?.id) {
         console.error("Missing required fields for image upload");
         return;
       }
@@ -134,7 +135,7 @@ function LocationModal({ show, handleClose, location }) {
         const locationRef = doc(
           db,
           "Users",
-          user.email,
+          user.uid,
           "Locations",
           location.id
         );
@@ -410,8 +411,8 @@ function LocationModal({ show, handleClose, location }) {
       <Modal.Footer style={{ justifyContent: "center" }}>
 
       <Navigation location={location} />
-     
-        <OverlayTrigger placement="bottom" overlay={<Tooltip>שתף</Tooltip>}>
+     <Sharing location={location}/>
+        {/* <OverlayTrigger placement="bottom" overlay={<Tooltip>שתף</Tooltip>}>
           <Button
             variant="outline-warning"
             // onClick={handleDelete}
@@ -419,7 +420,7 @@ function LocationModal({ show, handleClose, location }) {
             >
             {deleting ? "משתף..." : <Share />}
           </Button>
-        </OverlayTrigger>
+        </OverlayTrigger> */}
         <OverlayTrigger placement="bottom" overlay={<Tooltip>מחק מיקום</Tooltip>}>
           <Button
             variant="outline-danger"

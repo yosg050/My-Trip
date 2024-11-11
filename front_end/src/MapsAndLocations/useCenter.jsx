@@ -47,6 +47,33 @@ export const useCenter = () => {
   //   return 
 
   // }
+if (center){  const handlePredictionClick = async (placeId) => {
+  try {
+    const response = await axios.get(
+      `http://localhost:4000/placeDetails?placeId=${placeId}`
+    );
+    console.log(response.data);
+
+    const newTarget = {
+      name: response.data.result.name,
+      address: response.data.result.formatted_address,
+      latitude: response.data.result.geometry.location.lat,
+      longitude: response.data.result.geometry.location.lng,
+      place_id: response.data.result.place_id,
+    };
+
+    console.log(newTarget);
+
+    if (onPlaceSelect) {
+      onPlaceSelect(newTarget);
+    }
+
+    setInput("");
+    setPredictions([]);
+  } catch (error) {
+    console.error(error);
+  }
+};}
 
   return { center, loading, error, getCurrentCenter, updateCenter };
 };

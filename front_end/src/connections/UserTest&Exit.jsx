@@ -5,15 +5,14 @@ import { auth } from "../../firebaseConfig";
 import { Navigate, useNavigate } from "react-router-dom";
 import { BoxArrowLeft, Gear } from "react-bootstrap-icons";
 import { Button, Dropdown } from "react-bootstrap";
-import Settings from "../components/Settings";
 
 const UserTestAndExit = () => {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
-  const [showModal, setShowModal] = useState(false);
+  // const [showModal, setShowModal] = useState(false);
 
-  const handleOpenModal = () => setShowModal(true);
-  const handleCloseModal = () => setShowModal(false);
+  // const handleOpenModal = () => setShowModal(true);
+  // const handleCloseModal = () => setShowModal(false);
 
   useEffect(() => {
     if (!loading && !user) {

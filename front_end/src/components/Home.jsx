@@ -3,9 +3,9 @@ import { useUserProfile } from "../connections/GetUserDate";
 import MyMap from "../MapsAndLocations/MyMap";
 import AddDestinationOffcanvas from "../MapsAndLocations/AddDestinationWindow";
 import Button from "react-bootstrap/Button";
-import { Compass, Map, PersonWalking, PlusLg } from "react-bootstrap-icons";
+import { CardList, Compass, Map, PinMap, PlusLg } from "react-bootstrap-icons";
 import TargetSearch from "../MapsAndLocations/TargetSearch";
-import { OverlayTrigger, Spinner, Tooltip } from "react-bootstrap";
+import { ButtonGroup, OverlayTrigger, Spinner, Tooltip } from "react-bootstrap";
 import LocationList from "../MapsAndLocations/LocationList";
 import FilterUI from "../MapsAndLocations/FilterUI";
 import {
@@ -13,12 +13,14 @@ import {
   filterLocationsTarget,
 } from "../MapsAndLocations/filterLocationsComponent";
 import { useCenter } from "../MapsAndLocations/useCenter";
-import logoImage from "../assets/logo2.png";
+import logoImage from "../assets/logo3.png";
 import ProfileButton from "./ImegeButton";
 import useMobile from "./UseMobile";
+import CenterManagement from "../MapsAndLocations/NewCenter";
 
 const Home = () => {
   const isMobile = useMobile();
+  const [transportMode, setTransportMode] = useState(1);
 
   const [locationsFiltered, setLocationsFiltered] = useState([]);
   const {
@@ -40,7 +42,7 @@ const Home = () => {
   const [showFilterUI, setShowFilterUI] = useState(false);
   const [activeFilter, setActiveFilter] = useState(null);
   const [filterParams, setFilterParams] = useState({});
-  const listLocations = "רשימת היעדים שלי";
+  const listLocations = "היעדים שלי";
   const choiceLocations = "בחירת יעד מתאים";
   const [title, setTitle] = useState(listLocations);
 
@@ -106,7 +108,6 @@ const Home = () => {
   const refreshButton = () => {
     window.location.reload();
   };
-
   return (
     <>
       <div
@@ -129,20 +130,35 @@ const Home = () => {
           }}
         >
           <ProfileButton />
+          {!isMobile && (
+            <CenterManagement
+              onCenterChange={handleCenterChange}
+              style={{
+                textAlign: "center",
+                alignSelf: "end",
+              }}
+            />
+          )}
+
           <h2
             style={{
               fontWeight: "bold",
-              fontSize: "clamp(12px, 5vw, 38px",
+              fontSize: "clamp(12px, 5vw, 38px)",
               textAlign: "center",
-              // textShadow: "1px 1px 2px rgba(0,0,0,0.5)",
-              alignSelf: "end",
+              marginLeft: "5%",
             }}
           >
             {title}
           </h2>
+
           <div>
             <Button variant="link" onClick={refreshButton}>
-              <img src={logoImage} width="150" height="60" alt="MyTrip Logo" />
+              <img
+                src={logoImage}
+                width={isMobile ? "75" : " 165"}
+                height={isMobile ? "30" : " 66"}
+                alt="MyTrip Logo"
+              />
             </Button>
           </div>
         </div>
@@ -155,42 +171,100 @@ const Home = () => {
             flexDirection: isMobile ? "column" : "row",
           }}
         >
+          {/* <CenterManagement  onCenterChange={handleCenterChange}/> */}
+          {isMobile && (
+            <div style={{display: 'flex', justifyContent: 'space-around', alignItems: 'center'}}>
+              <CenterManagement
+                onCenterChange={handleCenterChange}
+                style={{
+                  // textAlign: "center",
+                  // alignSelf: "end",
+                }}
+              />
+              <ButtonGroup  style={{ margin: "10px" }}>
+                <Button
+                  variant={transportMode === 1 ? "primary" : "outline-primary"}
+                  onClick={() => setTransportMode(1)}
+                >
+                  <CardList />
+                </Button>
+                <Button
+                  variant={transportMode === 2 ? "primary" : "outline-primary"}
+                  onClick={() => setTransportMode(2)}
+                >
+                  <Map />
+                </Button>
+              </ButtonGroup>
+            </div>
+          )}
+          {!isMobile ? (
+            <>
+              <div
+                style={{
+                  width: "58%",
+                  height: "100%",
+                  marginRight: "7px",
+                  marginLeft: "2px",
+                }}
+              >
+                <MyMap
+                  filteredLocations={locationsFiltered}
+                  onCenterChange={handleCenterChange}
+                  center={center}
+                  onRefreshCenter={getCurrentCenter}
+                />
+              </div>
+              <div
+                style={{
+                  width: "35%",
+                  height: "100%",
+                  overflowY: "auto",
+                  // marginTop: "7px",
+                  scrollbarWidth: "none", // Firefox
+                  msOverflowStyle: "none", // Internet Explorer 10+
+                }}
+              >
+                <LocationList locations={locationsFiltered} />
+              </div>
+            </>
+          ) : transportMode === 1 ? (
+            <div
+              style={{
+                width: "100%",
+                height: "500vh",
+                overflowY: "auto",
+                // marginTop: "7px",
+                marginLeft: "5px",
+                scrollbarWidth: "none",
+                msOverflowStyle: "none",
+              }}
+            >
+              <LocationList locations={locationsFiltered} />
+            </div>
+          ) : (
+            <div
+              style={{
+                width: "100%",
+                height: "500vh",
+                overflowY: "hidden",
+              }}
+            >
+              <MyMap
+                filteredLocations={locationsFiltered}
+                onCenterChange={handleCenterChange}
+                center={center}
+                onRefreshCenter={getCurrentCenter}
+              />
+            </div>
+          )}
+
           <div
             style={{
-              width: "58%",
-              height: "100%",
-              overflowY: "auto",
-              marginRight: "7px",
-              marginLeft: "2px",
-            }}
-          >
-            <MyMap
-              filteredLocations={locationsFiltered}
-              onCenterChange={handleCenterChange}
-              center={center}
-              onRefreshCenter={getCurrentCenter}
-            />
-          </div>
-          <div
-            style={{
-              width: "35%",
-              height: "100%",
-              overflowY: "auto",
-              // marginTop: "7px",
-              scrollbarWidth: "none", // Firefox
-              msOverflowStyle: "none", // Internet Explorer 10+
-            }}
-          >
-            <LocationList locations={locationsFiltered} />
-          </div>
-          <div
-            style={{
-              width: "5%",
-              height: "100%",
+              width: isMobile ? "100%" : "auto",
+              height: isMobile ? "auto" : "100vh",
               display: "flex",
               flexDirection: isMobile ? "row" : "column",
-              justifyContent: "flex-start",
-              // padding: "10px",
+              justifyContent: isMobile ? "center" : "flex-start",
               alignItems: "center",
               marginTop: "10px",
             }}
@@ -205,7 +279,7 @@ const Home = () => {
                 onClick={handleShowFilterUI}
                 style={{ margin: "10px" }}
               >
-                <Map strokeWidth={3} width={24} height={24} />
+                <PinMap strokeWidth={3} width={24} height={24} />
               </Button>
             </OverlayTrigger>
             <OverlayTrigger

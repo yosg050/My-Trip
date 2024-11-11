@@ -8,44 +8,6 @@ import { useUserProfile } from "../connections/GetUserDate";
 
 const placesDataSingle = placesData;
 
-const styles = {
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    height: '100%',
-  },
-  header: {
-    textAlign: 'center',
-    marginBottom: '20px',
-  },
-  checkboxContainer: {
-    flexGrow: 1,
-    overflowY: 'auto',
-    marginBottom: '20px',
-  },
-  checkboxList: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'flex-start',
-    gap: '10px',
-  },
-  checkboxItem: {
-    width: 'calc(25% - 7.5px)',
-    direction: 'rtl',
-    textAlign: 'right',
-  },
-  footer: {
-    position: 'sticky',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    paddingBottom: '10px',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white',
-  },
-};
-
 export default function InformationListForTrip() {
   const [selectedPlaces, setSelectedPlaces] = useState({});
   const { user } = useAuth();
@@ -68,7 +30,7 @@ export default function InformationListForTrip() {
     }
 
     try {
-      const userDocRef = doc(db, "Users", user.email);
+      const userDocRef = doc(db, "Users", user.uid);
       await setDoc(
         userDocRef,
         {
@@ -88,34 +50,103 @@ export default function InformationListForTrip() {
   if (error) return <div>שגיאה בטעינת הנתונים: {error.message}</div>;
 
   return (
-    <div style={styles.container}>
-      <div style={styles.header}>
-        <h2>בחר מקומות</h2>
-        <p>בחר ביעדי סוגי טיולים</p>
+    <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+      <div style={{ textAlign: "center", marginBottom: "20px" }}>
+        <p style={{ fontWeight: "bold", fontSize: "1.5em", lineHeight: "1" }}>
+          בחר מקומות
+        </p>
+        <p style={{ fontSize: "1em", lineHeight: "0.8" }}>
+          הוסף מקומות עניין לטיולים שלך
+        </p>
       </div>
-      <div style={styles.checkboxContainer}>
-        <Form>
-          <div style={styles.checkboxList}>
-            {placesDataSingle.map(({ hebrew, english }) => (
-              <div key={english} style={styles.checkboxItem}>
-                <Form.Check
-                  type="switch"
-                  id={english}
-                  checked={selectedPlaces[english] || false}
-                  label={hebrew}
-                  onChange={(e) =>
-                    handleCheckboxChange(english, e.target.checked)
-                  }
-                  reverse
-                />
-              </div>
-            ))}
-          </div>
-        </Form>
+      <div style={{ flexGrow: 1, overflowY: "auto", marginBottom: "20px" }}>
+        <Modal.Body
+          style={{
+            maxHeight: "250px", // הגדר גובה מקסימלי לגבול אזור הגלילה
+            overflowY: "auto", // מאפשר גלילה רק בתוך ה-Modal.Body
+          }}
+        >
+          <Form>
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                justifyContent: "flex-start",
+                gap: "10px",
+              }}
+            >
+              {placesDataSingle.map(({ hebrew, english }) => (
+                <div
+                  key={english}
+                  style={{
+                    width: "calc(25% - 7.5px)",
+                    direction: "rtl",
+                    textAlign: "right",
+                  }}
+                >
+                  <Form.Check
+                    type="switch"
+                    id={english}
+                    checked={selectedPlaces[english] || false}
+                    label={hebrew}
+                    onChange={(e) =>
+                      handleCheckboxChange(english, e.target.checked)
+                    }
+                    reverse
+                  />
+                </div>
+              ))}
+            </div>
+          </Form>
+        </Modal.Body>
       </div>
-      <Modal.Footer style={styles.footer}>
+      <Modal.Footer
+        style={{
+          position: "sticky",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          paddingBottom: "0",
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "white",
+        }}
+      >
         <Button onClick={saveToFirestore}>שמור העדפות</Button>
       </Modal.Footer>
     </div>
   );
 }
+
+// return (
+//   <div style={styles.container}>
+//     <div style={styles.header}>
+//       <h2>בחר מקומות</h2>
+//       <p>בחר ביעדי סוגי טיולים</p>
+//     </div>
+//     <div style={styles.checkboxContainer}>
+//       <Form>
+//         <div style={styles.checkboxList}>
+//           {placesDataSingle.map(({ hebrew, english }) => (
+//             <div key={english} style={styles.checkboxItem}>
+//               <Form.Check
+//                 type="switch"
+//                 id={english}
+//                 checked={selectedPlaces[english] || false}
+//                 label={hebrew}
+//                 onChange={(e) =>
+//                   handleCheckboxChange(english, e.target.checked)
+//                 }
+//                 reverse
+//               />
+//             </div>
+//           ))}
+//         </div>
+//       </Form>
+//     </div>
+//     <Modal.Footer style={styles.footer}>
+//       <Button onClick={saveToFirestore}>שמור העדפות</Button>
+//     </Modal.Footer>
+//   </div>
+// );
+// }

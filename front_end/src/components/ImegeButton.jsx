@@ -6,8 +6,10 @@ import { useAuth } from "../connections/AuthContext";
 import { useUserProfile } from "../connections/GetUserDate";
 import Settings from "./Settings";
 import Info from "./Info";
+import useMobile from "./UseMobile";
 
 const ProfileButton = () => {
+  const isMobile = useMobile();
   const [showSettings, setShowSettings] = useState(false);
   const { user, logout } = useAuth();
   const [profileData, setProfileData] = useState(null);
@@ -52,15 +54,15 @@ const ProfileButton = () => {
                   "https://via.placeholder.com/50"
                 }
                 roundedCircle
-                width="50"
-                height="50"
+                width={isMobile ? "35" : " 50"}
+                height={isMobile ? "35" : " 50"}
               />
             ) : (
-              <PersonCircle size={50} color="#0D6EFD" />
+              <PersonCircle size={isMobile ? "35" : " 50"} color="#0D6EFD" />
             )}
           </Dropdown.Toggle>
 
-          <Dropdown.Menu >
+          <Dropdown.Menu>
             <Dropdown.ItemText className="text-center font-weight-bold">
               {profileData?.lastName && profileData.firstName
                 ? `${profileData.firstName} ${profileData.lastName}`

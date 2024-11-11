@@ -17,6 +17,7 @@ function AddDestinationWindow({ show, onHide }) {
   const [availableTripTypes, setAvailableTripTypes] = useState([]);
   const [selectedTripTypes, setSelectedTripTypes] = useState({});
   const [notes, setNotes] = useState("");
+  const [isNewPlaceCheck, setIsNewPlaceCheck] = useState(false);
 
   useEffect(() => {
     if (userData && userData.typesOfTrips) {
@@ -94,11 +95,13 @@ function AddDestinationWindow({ show, onHide }) {
 
     setSelectedPlace(updatedPlace);
     setShowAddLocation(true);
+    // newPlace = true
   };
 
   const handleAddLocationSuccess = () => {
     setSelectedPlace(null);
     setShowAddLocation(false);
+    setIsNewPlaceCheck(false)
     handleShowAlert("המיקום נוסף בהצלחה", "success");
   };
 
@@ -107,7 +110,7 @@ function AddDestinationWindow({ show, onHide }) {
   };
 
   useEffect(() => {
-    if (selectedPlace) {
+    if (selectedPlace && !isNewPlaceCheck) {
       const isPlaceAlreadyInLocations = locations.some(
         (location) => location.id === selectedPlace.id
       );
@@ -116,8 +119,9 @@ function AddDestinationWindow({ show, onHide }) {
       if (isPlaceAlreadyInLocations) {
         handleShowAlert("המיקום כבר קיים ברשימה");
       }
+      setIsNewPlaceCheck(true);
     }
-  }, [selectedPlace, locations]);
+  }, [selectedPlace, locations, isNewPlaceCheck]);
 
   return (
     <Offcanvas
@@ -138,7 +142,7 @@ function AddDestinationWindow({ show, onHide }) {
               <AutocompleteInput
                 onPlaceSelect={handlePlaceSelect}
                 onInputChange={handleInputChange}
-             
+                text=" חפש יעד"
               />
             </Col>
           </Row>
@@ -173,31 +177,35 @@ function AddDestinationWindow({ show, onHide }) {
                         marginRight: "10%",
                         textAlign: "right",
                       }}
-                    > <span
-                    style={{
-                      fontWeight: "bold",
-                    }}
-                  >
-                    שם:{" "}
-                  </span>{" "}
+                    >
+                      {" "}
+                      <span
+                        style={{
+                          fontWeight: "bold",
+                        }}
+                      >
+                        שם:{" "}
+                      </span>{" "}
                       {selectedPlace.name}
                     </p>
-                    <p  style={{
+                    <p
+                      style={{
                         lineHeight: "1",
                         marginRight: "10%",
                         textAlign: "right",
-                      }}> 
+                      }}
+                    >
                       <span
-                    style={{
-                      fontWeight: "bold",
-                    }}
-                  >
-                    כתובת:{" "}
-                  </span>{" "}
+                        style={{
+                          fontWeight: "bold",
+                        }}
+                      >
+                        כתובת:{" "}
+                      </span>{" "}
                       {selectedPlace.address}
                     </p>
                   </div>
-                  <p 
+                  <p
                     style={{
                       fontWeight: "bold",
                       marginTop: "20px",
@@ -244,11 +252,11 @@ function AddDestinationWindow({ show, onHide }) {
                     />
                   </Form.Group>
                 </Form>
-                <Row >
+                <Row>
                   <Col xs={6} style={{ marginTop: "15px" }}>
-                  <Button variant="primary" onClick={handleAddLocation}>
-                  הוסף יעד
-                </Button>
+                    <Button variant="primary" onClick={handleAddLocation}>
+                      הוסף יעד
+                    </Button>
                   </Col>
                 </Row>
               </Col>

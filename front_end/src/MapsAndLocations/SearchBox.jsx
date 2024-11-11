@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Popup } from "mapbox-gl";
 import { useAuth } from "../connections/AuthContext";
 import { ListGroup } from "react-bootstrap";
 
-const AutocompleteInput = ({ onPlaceSelect }) => {
+const AutocompleteInput = ({ onPlaceSelect, text }) => {
   const [input, setInput] = useState("");
   const [predictions, setPredictions] = useState([]);
   const { user } = useAuth();
@@ -48,7 +47,6 @@ const AutocompleteInput = ({ onPlaceSelect }) => {
 
       console.log(newTarget);
 
-      // קריאה ל-onPlaceSelect כדי להעביר את הערך שנבחר חזרה לרכיב האב
       if (onPlaceSelect) {
         onPlaceSelect(newTarget);
       }
@@ -61,10 +59,10 @@ const AutocompleteInput = ({ onPlaceSelect }) => {
   };
 
   return (
-    <div className="relative min-w-[300px]">
+    <div>
       <input
         id="autocomplete"
-        placeholder="חפש יעד"
+        placeholder={text}
         value={input}
         onChange={handleInputChange}
         autoComplete="off"
@@ -74,10 +72,10 @@ const AutocompleteInput = ({ onPlaceSelect }) => {
           width: "100%",
           padding: "8px",
           border: "1px solid #e5e7eb",
-          borderRadius: "4px",
+          borderRadius: "8px",
           textAlign: "right",
           direction: "rtl",
-          borderColor: '#0d6efd'
+          borderColor: "#0d6efd",
         }}
       />
 
@@ -85,10 +83,11 @@ const AutocompleteInput = ({ onPlaceSelect }) => {
         <ListGroup
           style={{
             position: "absolute",
-            zIndex: 1000, 
-            width: "90%", 
-            backgroundColor: "white", 
-            boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)", 
+            zIndex: 1000,
+            width: "90%",
+            maxWidth: '400px',
+            backgroundColor: "white",
+            boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
           }}
         >
           {predictions.map((prediction, index) => (

@@ -1,42 +1,26 @@
-import {
-  GoogleAuthProvider,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-} from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
+
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../firebaseConfig";
-import SignUp from "./NewUser";
-import { useAuth } from "./AuthContext";
-import logoImage from "../assets/logo2.png";
+import logoImage from "../assets/logo3.png";
 import Image from "react-bootstrap/Image";
-import { Alert, Button, Col, Form, Row } from "react-bootstrap";
-import handleResetPassword from "./resetPasswordEmail";
+import { Button } from "react-bootstrap";
+import { Google } from "react-bootstrap-icons";
 
 const SignIn = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
-  const { user } = useAuth();
+  const { user } = auth;
+  console.log(user);
+  
   const navigate = useNavigate();
+  const provider = new GoogleAuthProvider();
 
   useEffect(() => {
     if (user) {
       navigate("/");
+      signOut(auth);
     }
   }, [user, navigate]);
-
-  const provider = new GoogleAuthProvider();
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      navigate("/");
-    } catch (error) {
-      setError(error.message);
-    }
-  };
 
   const handleGoogleSignIn = async () => {
     try {
@@ -53,70 +37,45 @@ const SignIn = () => {
       style={{
         display: "flex",
         justifyContent: "center",
-        textAlign: "center",
         alignItems: "center",
-        marginTop: "30%",
+        height: "100vh",
+        width: "100vw",
       }}
     >
-      <Col
+      <div
         style={{
+          border: "1px solid #007bff",
+          borderRadius: "20px",
+          boxShadow: "2px 2px 10px rgba(0, 0, 0, 0.2)",
+          padding: "5%",
           display: "flex",
-          justifyContent: "center",
-          textAlign: "center",
-          alignItems: "center",
           flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
-        <Form onSubmit={handleSubmit}>
-          <Image
-            src={logoImage}
-            rounded
-            style={{ width: "300px", height: "120px" }}
-          />
-          {/* <h2
-            style={{
-              fontWeight: "bold",
-              fontSize: "1.5rem",
-              textShadow: "1px 1px 2px rgba(0,0,0,0.5)",
-              textAlign: "center",
-            }}
-          >
-            MyTrip
-          </h2> */}
-          <Form.Group className="mt-3" controlId="formPlaintextEmail">
-            <Form.Label>מייל</Form.Label>
-            <Form.Control
-              type="email"
-              placeholder="Email"
-              autoComplete="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </Form.Group>
-          <Form.Group controlId="formPlaintextPassword">
-            <Form.Label sm="2">סיסמה</Form.Label>
+        <Image
+          src={logoImage}
+          rounded
+          style={{ width: "225px", height: "90px" }}
+        />
 
-            <Form.Control
-              type="password"
-              placeholder="Password"
-              autoComplete="current-password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </Form.Group>
-          <a href="#" variant="primary" onClick={handleResetPassword}>
-            שכחתי סיסמה
-          </a>
-          <div className="d-grid gap-2">
-            <Button   type="submit" style={{ marginTop: "23px" }}>התחברות</Button>
-            <Button onClick={handleGoogleSignIn} style={{ marginTop: "23px" }}>
-              Google התחברות באמצעות חשבון
-            </Button>
-          </div>
-          {error && <Alert variant="danger">{error}</Alert>}
-        </Form>
-        <SignUp />
-      </Col>
+        <Button
+          variant="outline-info"
+          type="button"
+          onClick={handleGoogleSignIn}
+          style={{
+            boxShadow: "2px 2px 10px rgba(0, 0, 0, 0.2)",
+
+            marginTop: "40px",
+            alignItems: "center",
+            justifyContent: "center",
+            textAlign: "center",
+          }}
+        >
+          Google התחברות באמצעות <Google />
+        </Button>
+      </div>
     </div>
   );
 };

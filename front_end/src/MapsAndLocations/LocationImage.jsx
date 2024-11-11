@@ -13,9 +13,9 @@ function LocationImage({ location, user, onImageUpload }) {
   const handleFileChange = useCallback(
     async (event) => {
       const file = event.target.files[0];
-      if (file && user?.email && location?.id) {
+      if (file && user?.uid && location?.id) {
         try {
-          const path = `locations/${user.email}/${location.id}`;
+          const path = `locations/${user.uid}/${location.id}`;
           const downloadURL = await uploadImage(file, path);
           onImageUpload(downloadURL);
         } catch (error) {

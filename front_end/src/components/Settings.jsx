@@ -2,7 +2,6 @@ import React from "react";
 import { Tab, Tabs } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
 import CategorySelection from "./InformationListForTrip";
-import ChangePassword from "../connections/ChangePassword";
 import TripTypes from "./TypesOfTrips";
 import UserStatus from "./userStatus";
 
@@ -44,9 +43,6 @@ function Settings({ show, handleClose }) {
         >
           <Tab eventKey="פרטי משתמש" title="פרטי משתמש">
             <UserStatus />
-          </Tab>
-          <Tab eventKey="שינוי סיסמה" title="שינוי סיסמה">
-            <ChangePassword />
           </Tab>
           <Tab eventKey="הוספת נתונים" title="הוספת נתונים">
             <CategorySelection />

@@ -58,16 +58,10 @@ export async function filterLocationsTarget(
     return [];
   }
 
-  // סינון מיקומים מבוקרים בהתאם לפרמטר includeVisited
   let filteredLocations = includeVisited
     ? locations
     : locations.filter((location) => !location.visit);
 
-  // console.log(
-  //   `${includeVisited ? "Included" : "Removed"} ${
-  //     locations.length - filteredLocations.length
-  //   } visited locations`
-  // );
 
   filteredLocations = filteredLocations.filter((location) => {
     if (!location.tripTypes || !Array.isArray(location.tripTypes)) {
@@ -83,10 +77,7 @@ export async function filterLocationsTarget(
     return hasSelectedTypes;
   });
 
-  // console.log(
-  //   "Filtered locations before server request:",
-  //   filteredLocations.map((loc) => loc.name)
-  // );
+
 
   // const selectedPlacesForTripEnglish = Object.keys(
   //   selectedPlacesForTrip

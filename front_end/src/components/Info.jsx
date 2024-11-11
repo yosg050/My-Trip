@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Button, Col, Modal, Row, Tab, Tabs } from "react-bootstrap";
 import { Github, Linkedin, Whatsapp } from "react-bootstrap-icons";
-import logoImage from "../assets/logo2.png";
+
 
 export default function Info({ show, handleClose }) {
   useEffect(() => {
@@ -46,11 +46,7 @@ export default function Info({ show, handleClose }) {
           עזרה ויצירת קשר
         </Modal.Title>
       </Modal.Header>
-      {/* <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          פרטים ויצירת קשר
-        </Modal.Title>
-      </Modal.Header> */}
+
       <Modal.Body
         style={{
           height: "80vh",
@@ -70,22 +66,6 @@ export default function Info({ show, handleClose }) {
                 marginTop: "10%",
               }}
             >
-              {/* <img
-                src={logoImage}
-                width="225"
-                height="90"
-                alt="MyTrip Logo"
-              ></img>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                textAlign: "center",
-                flexDirection: "column",
-                justifyContent: "space-evenly",
-                marginTop: "10%",
-              }}
-            > */}
               <Row>
                 <Col>
                   <Button
@@ -132,21 +112,6 @@ export default function Info({ show, handleClose }) {
                   <p>Github </p>
                 </Col>
               </Row>
-
-              {/* <Form onSubmit={handleSendMessage}>
-              <Form.Group className="mb-3">
-                <Form.Control
-                  as="textarea"
-                  rows={3}
-                  placeholder="לשליחת הודעה"
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  />
-                  </Form.Group>
-                  <Button variant="primary" type="submit" className="w-100">
-                  שלח
-                  </Button>
-                  </Form> */}
             </div>
           </Tab>
           <Tab eventKey="מידע למשתמש" title="מידע למשתמש">

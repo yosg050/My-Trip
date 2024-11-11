@@ -5,7 +5,8 @@ import { useAuth } from '../connections/AuthContext';
 
 export default function AddDataCollection({ newTarget, onSuccess , collection}) {
     const { user } = useAuth();
-    const userEmail = user.email
+    // const userEmail = user.email
+    const userUID = user.uid
 
     // console.log("xx");
 
@@ -13,9 +14,9 @@ export default function AddDataCollection({ newTarget, onSuccess , collection}) 
 
     useEffect(() => {
         const addLocationToFirebase = async () => {
-            if (newTarget && userEmail) {
+            if (newTarget && userUID ) {
                 try {
-                    await setDoc(doc(db, "Users", userEmail, collection , newTarget.place_id), {
+                    await setDoc(doc(db, "Users", userUID, collection , newTarget.place_id), {
                         name: newTarget.name,
                         address: newTarget.address,
                         latitude: newTarget.latitude,
@@ -37,7 +38,7 @@ export default function AddDataCollection({ newTarget, onSuccess , collection}) 
         
 
         addLocationToFirebase();
-    }, [newTarget, userEmail, onSuccess]);
+    }, [newTarget, userUID, onSuccess]);
 
     
     return (

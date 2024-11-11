@@ -5,21 +5,22 @@ import LocationModal from "./LocationModal";
 function LocationList({ locations, onLocationUpdate }) {
   const [showModal, setShowModal] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState(null);
-  const [listSize, setListSize] = useState({ width: "100%", height: "80vh" });
+  const [listSize, setListSize] = useState({ width: "100%", height: "100%" });
   const listContainerRef = useRef(null);
 
   const updateListSize = useCallback(() => {
     if (listContainerRef.current) {
       const { offsetWidth } = listContainerRef.current.parentElement;
       const windowHeight = window.innerHeight;
-      const topMargin = 20; // Adjust this value based on your layout
-      const bottomMargin = 0; // Adjust this value to increase/decrease bottom margin
+      const topMargin = 20; 
+      const bottomMargin = 0; 
 
       setListSize({
         width: `${offsetWidth}px`,
-        height: `${
-          Math.floor(windowHeight * 0.9) - topMargin - bottomMargin
-        }px`,
+        height: "100%"
+        //  `${
+        //   Math.floor(windowHeight * 0.9) - topMargin - bottomMargin
+        // }px`,
       });
     }
   }, []);
@@ -52,31 +53,32 @@ function LocationList({ locations, onLocationUpdate }) {
     [onLocationUpdate]
   );
 
-  if (!locations || !Array.isArray(locations) ) {
+  if (!locations || !Array.isArray(locations)) {
     return (
       <div
         className="d-flex justify-content-center align-items-center"
-        style={{ height: "90vh" }}
+        style={{ height: "100vh" }}
       >
-        <Spinner  variant="primary"/>
+        <Spinner variant="primary" />
       </div>
     );
   }
-  if ( locations.length === 0){
-    return (<div
-    className="d-flex justify-content-center align-items-center"
-    style={{ height: "90vh" }}
-  >
-    אין מיקומים להצגה
-  </div>
-);
+  if (locations.length === 0) {
+    return (
+      <div
+        className="d-flex justify-content-center align-items-center"
+        style={{ height: "100vh" }}
+      >
+        אין מיקומים להצגה
+      </div>
+    );
   }
 
   const listContainerStyle = {
     width: listSize.width,
     height: listSize.height,
     overflowY: "scroll",
-    marginBottom: "20px",
+    // marginBottom: "10px",
     paddingRight: "10px",
     scrollbarWidth: "none", // Firefox
     msOverflowStyle: "none", // Internet Explorer 10+
@@ -91,7 +93,7 @@ function LocationList({ locations, onLocationUpdate }) {
 
   return (
     <div ref={listContainerRef} style={listContainerStyle}>
-      <style>
+      {/* <style>
         {`
           #locationListContainer::-webkit-scrollbar {
             display: none;
@@ -104,12 +106,12 @@ function LocationList({ locations, onLocationUpdate }) {
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
           }
         `}
-      </style>
+      </style> */}
       <div id="locationListContainer" style={listContentStyle}>
         {locations.map((location, index) => (
           <Card
             key={index}
-            style={{ width: "100%", marginBottom: "10px", }}
+            style={{ width: "100%", marginBottom: "10px" }}
             className="clickable-card"
             onClick={() => handleCardClick(location)}
           >
