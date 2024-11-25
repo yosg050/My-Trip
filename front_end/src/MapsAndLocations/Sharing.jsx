@@ -12,7 +12,6 @@ const Sharing = ({ location }) => {
       <Button
         variant="outline-warning"
         onClick={handleDelete}
-        // disabled={deleting}
       >
         <Share />
       </Button>

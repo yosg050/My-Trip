@@ -74,7 +74,7 @@ function FilterUI({ show, onHide, onFilterChange }) {
             onClick={handleReset}
             style={{ marginTop: "15px" }}
             >
-            איפוס הסינונים
+            ביטול סינונים
           </Button>
             </Col>
         </Row>

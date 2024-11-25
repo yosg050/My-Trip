@@ -5,9 +5,10 @@ import { db } from "../../firebaseConfig";
 import { useAuth } from "../connections/AuthContext";
 import placesData from "../../LocationsHebrewEnglish";
 import { useUserProfile } from "../connections/GetUserDate";
+import useMobile from "../components/UseMobile";
 
 const placesDataSingle = placesData;
-
+const isMobile = useMobile;
 export default function InformationListForTrip() {
   const [selectedPlaces, setSelectedPlaces] = useState({});
   const { user } = useAuth();
@@ -59,29 +60,29 @@ export default function InformationListForTrip() {
           הוסף מקומות עניין לטיולים שלך
         </p>
       </div>
-      <div style={{ flexGrow: 1, overflowY: "auto", marginBottom: "20px" }}>
+      <div
+        style={{
+          flexGrow: 1,
+          overflowY: "auto",
+          marginBottom: "20px",
+        }}
+      >
         <Modal.Body
           style={{
-            maxHeight: "250px", // הגדר גובה מקסימלי לגבול אזור הגלילה
-            overflowY: "auto", // מאפשר גלילה רק בתוך ה-Modal.Body
+            display: "flex",
+            maxHeight: "250px",
+            justifyContent: "center",
+            overflowY: "auto",
           }}
         >
           <Form>
-            <div
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                justifyContent: "flex-start",
-                gap: "10px",
-              }}
-            >
+            <div>
               {placesDataSingle.map(({ hebrew, english }) => (
                 <div
                   key={english}
                   style={{
-                    width: "calc(25% - 7.5px)",
+                    width: "100%",
                     direction: "rtl",
-                    textAlign: "right",
                   }}
                 >
                   <Form.Check

@@ -3,7 +3,14 @@ import { useUserProfile } from "../connections/GetUserDate";
 import MyMap from "../MapsAndLocations/MyMap";
 import AddDestinationOffcanvas from "../MapsAndLocations/AddDestinationWindow";
 import Button from "react-bootstrap/Button";
-import { CardList, Compass, Map, PinMap, PlusLg } from "react-bootstrap-icons";
+import {
+  ArrowClockwise,
+  CardList,
+  Compass,
+  Map,
+  PinMap,
+  PlusLg,
+} from "react-bootstrap-icons";
 import TargetSearch from "../MapsAndLocations/TargetSearch";
 import { ButtonGroup, OverlayTrigger, Spinner, Tooltip } from "react-bootstrap";
 import LocationList from "../MapsAndLocations/LocationList";
@@ -14,12 +21,16 @@ import {
 } from "../MapsAndLocations/filterLocationsComponent";
 import { useCenter } from "../MapsAndLocations/useCenter";
 import logoImage from "../assets/logo3.png";
-import ProfileButton from "./ImegeButton";
 import useMobile from "./UseMobile";
 import CenterManagement from "../MapsAndLocations/NewCenter";
+import ProfileButton from "../Settings/ImegeButton";
 
 const Home = () => {
   const isMobile = useMobile();
+
+  const overlayTrigger  = () => isMobile ? "top" : "left";
+
+
   const [transportMode, setTransportMode] = useState(1);
 
   const [locationsFiltered, setLocationsFiltered] = useState([]);
@@ -73,6 +84,13 @@ const Home = () => {
   }, [locations, activeFilter, filterParams, center]);
 
   useEffect(() => {}, [locations, locationsFiltered]);
+
+  const reset = () => {
+    setActiveFilter(null);
+    setFilterParams({});
+    setLocationsFiltered(locations);
+    setTitle(listLocations);
+  };
 
   const handleFilterUIChange = (params) => {
     setActiveFilter("UI");
@@ -165,23 +183,21 @@ const Home = () => {
 
         <div
           style={{
-            // flexGrow: 1,
             display: "flex",
             overflow: "hidden",
             flexDirection: isMobile ? "column" : "row",
           }}
         >
-          {/* <CenterManagement  onCenterChange={handleCenterChange}/> */}
           {isMobile && (
-            <div style={{display: 'flex', justifyContent: 'space-around', alignItems: 'center'}}>
-              <CenterManagement
-                onCenterChange={handleCenterChange}
-                style={{
-                  // textAlign: "center",
-                  // alignSelf: "end",
-                }}
-              />
-              <ButtonGroup  style={{ margin: "10px" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-around",
+                alignItems: "center",
+              }}
+            >
+              <CenterManagement onCenterChange={handleCenterChange} />
+              <ButtonGroup style={{ margin: "10px" }}>
                 <Button
                   variant={transportMode === 1 ? "primary" : "outline-primary"}
                   onClick={() => setTransportMode(1)}
@@ -219,9 +235,8 @@ const Home = () => {
                   width: "35%",
                   height: "100%",
                   overflowY: "auto",
-                  // marginTop: "7px",
-                  scrollbarWidth: "none", // Firefox
-                  msOverflowStyle: "none", // Internet Explorer 10+
+                  scrollbarWidth: "none",
+                  msOverflowStyle: "none",
                 }}
               >
                 <LocationList locations={locationsFiltered} />
@@ -270,7 +285,7 @@ const Home = () => {
             }}
           >
             <OverlayTrigger
-              placement="left"
+              placement={overlayTrigger()}
               overlay={<Tooltip>הצגת היעדים שלי</Tooltip>}
             >
               <Button
@@ -283,7 +298,7 @@ const Home = () => {
               </Button>
             </OverlayTrigger>
             <OverlayTrigger
-              placement="left"
+              placement={overlayTrigger()}
               overlay={<Tooltip>הוספת יעד</Tooltip>}
             >
               <Button
@@ -296,7 +311,7 @@ const Home = () => {
               </Button>
             </OverlayTrigger>
             <OverlayTrigger
-              placement="left"
+              placement={overlayTrigger()}
               overlay={
                 <Tooltip>
                   חיפוש יעד <br />
@@ -311,6 +326,20 @@ const Home = () => {
                 style={{ margin: "10px" }}
               >
                 <Compass strokeWidth={3} width={24} height={24} />
+              </Button>
+            </OverlayTrigger>
+
+            <OverlayTrigger
+              placement={overlayTrigger()}
+              overlay={<Tooltip>איפוס סינונים </Tooltip>}
+            >
+              <Button
+                variant="outline-primary"
+                size="lg"
+                onClick={reset}
+                style={{ margin: "10px" }}
+              >
+                <ArrowClockwise strokeWidth={3} width={24} height={24} />
               </Button>
             </OverlayTrigger>
           </div>

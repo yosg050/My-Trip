@@ -462,7 +462,6 @@ function LocationModal({ show, handleClose, location }) {
         )}
       </Modal.Footer>
     </Modal>
-    {/* <Navigation /> */}
     </>
   );
 }

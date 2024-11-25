@@ -3,9 +3,12 @@ import cors from 'cors';
 import searchBox from './searchBox.js';
 import placeId from './placeId.js';
 import filterLocations from './filterLocations.js';
-import { apiKeyG} from './apiKey.js';
+import dotenv from 'dotenv';
 
-const apiKey = apiKeyG;
+
+dotenv.config();
+const apiKey = process.env.API_KEY_GOOGLE;
+
 const app = express();
 const router = express.Router();
 const PORT = 4000 || 5000;

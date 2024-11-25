@@ -43,10 +43,8 @@ export const useCenter = () => {
   useEffect(() => {
     getCurrentCenter();
   }, [getCurrentCenter]);
-  // if (center) {
-  //   return 
 
-  // }
+  
 if (center){  const handlePredictionClick = async (placeId) => {
   try {
     const response = await axios.get(

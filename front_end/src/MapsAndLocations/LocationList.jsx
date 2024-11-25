@@ -11,16 +11,13 @@ function LocationList({ locations, onLocationUpdate }) {
   const updateListSize = useCallback(() => {
     if (listContainerRef.current) {
       const { offsetWidth } = listContainerRef.current.parentElement;
-      const windowHeight = window.innerHeight;
-      const topMargin = 20; 
-      const bottomMargin = 0; 
+      // const windowHeight = window.innerHeight;
+      // const topMargin = 20;
+      // const bottomMargin = 0;
 
       setListSize({
         width: `${offsetWidth}px`,
-        height: "100%"
-        //  `${
-        //   Math.floor(windowHeight * 0.9) - topMargin - bottomMargin
-        // }px`,
+        height: "100%",
       });
     }
   }, []);
@@ -78,7 +75,6 @@ function LocationList({ locations, onLocationUpdate }) {
     width: listSize.width,
     height: listSize.height,
     overflowY: "scroll",
-    // marginBottom: "10px",
     paddingRight: "10px",
     scrollbarWidth: "none", // Firefox
     msOverflowStyle: "none", // Internet Explorer 10+
@@ -93,20 +89,6 @@ function LocationList({ locations, onLocationUpdate }) {
 
   return (
     <div ref={listContainerRef} style={listContainerStyle}>
-      {/* <style>
-        {`
-          #locationListContainer::-webkit-scrollbar {
-            display: none;
-          }
-          .clickable-card {
-            cursor: pointer;
-            transition: box-shadow 0.3s ease-in-out;
-          }
-          .clickable-card:hover {
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-          }
-        `}
-      </style> */}
       <div id="locationListContainer" style={listContentStyle}>
         {locations.map((location, index) => (
           <Card

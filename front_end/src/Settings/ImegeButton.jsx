@@ -6,7 +6,7 @@ import { useAuth } from "../connections/AuthContext";
 import { useUserProfile } from "../connections/GetUserDate";
 import Settings from "./Settings";
 import Info from "./Info";
-import useMobile from "./UseMobile";
+import useMobile from "../components/UseMobile";
 
 const ProfileButton = () => {
   const isMobile = useMobile();

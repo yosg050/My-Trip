@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Form, Button, Row, Col } from "react-bootstrap";
+import { Form, Row, Col, Button } from "react-bootstrap";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 import { useAuth } from "../connections/AuthContext";
 import { useUserProfile } from "../connections/GetUserDate";
+import { Plus } from "react-bootstrap-icons";
 
 function UserStatus() {
   const [children, setChildren] = useState([]);
@@ -19,12 +20,18 @@ function UserStatus() {
 
   useEffect(() => {
     if (userProfileData) {
-      setUserData(userProfileData);
-      if (userProfileData.children) {
-        setChildren(userProfileData.children);
-      }
+      setUserData({
+        firstName: userProfileData.firstName || "",
+        lastName: userProfileData.lastName || "",
+        birthDate: userProfileData.birthDate || "",
+        gender: userProfileData.gender || "",
+        maritalStatus: userProfileData.maritalStatus || "",
+      });
+      
+      setChildren(userProfileData.children || []);
     }
   }, [userProfileData]);
+
 
   const addChild = () => {
     setChildren([...children, { name: "", birthDate: "" }]);
@@ -76,18 +83,20 @@ function UserStatus() {
         height: "65vh",
         width: "100%",
         position: "relative",
-        overflow: "hidden"
+        overflow: "hidden",
       }}
     >
-      <div style={{ 
-        overflowY: "auto", 
-        overflowX: "hidden",
-        flexGrow: 1, 
-        paddingBottom: "60px",
-        paddingRight: "15px",
-        paddingLeft: "15px",
-        boxSizing: "border-box"
-      }}>
+      <div
+        style={{
+          overflowY: "auto",
+          overflowX: "hidden",
+          flexGrow: 1,
+          paddingBottom: "60px",
+          paddingRight: "15px",
+          paddingLeft: "15px",
+          boxSizing: "border-box",
+        }}
+      >
         <Form>
           <Row>
             <Col lg={6} md={12} className="mb-3">
@@ -163,8 +172,15 @@ function UserStatus() {
             </Col>
           </Row>
 
-          <Form.Group className="mb-3" >
-            <Form.Label>ילדים</Form.Label>
+          <Form.Group className="mb-3">
+            <div style={{justifyContent: 'center'}}>
+
+            <Button variant="outline-info" onClick={addChild} className="m-2">
+            הוסף ילד
+
+              <Plus />
+            </Button>
+            </div>
             {children.map((child, index) => (
               <div key={index} className="mb-2">
                 <Row>
@@ -173,7 +189,9 @@ function UserStatus() {
                       type="text"
                       placeholder="שם הילד"
                       value={child.name}
-                      onChange={(e) => updateChild(index, "name", e.target.value)}
+                      onChange={(e) =>
+                        updateChild(index, "name", e.target.value)
+                      }
                       className="mb-1"
                     />
                   </Col>
@@ -189,9 +207,8 @@ function UserStatus() {
                 </Row>
               </div>
             ))}
-            <Button variant="secondary" onClick={addChild} className="mt-2">
-              +
-            </Button>
+
+
           </Form.Group>
         </Form>
       </div>
@@ -204,7 +221,7 @@ function UserStatus() {
           padding: "10px",
           backgroundColor: "white",
           borderTop: "1px solid #dee2e6",
-          textAlign: "center"
+          textAlign: "center",
         }}
       >
         <Button onClick={saveToFirestore}>שמור פרטים</Button>

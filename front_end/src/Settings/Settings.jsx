@@ -3,7 +3,7 @@ import { Tab, Tabs } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
 import CategorySelection from "./InformationListForTrip";
 import TripTypes from "./TypesOfTrips";
-import UserStatus from "./userStatus";
+import UserStatus from "../components/userStatus";
 
 function Settings({ show, handleClose }) {
   return (
@@ -37,14 +37,14 @@ function Settings({ show, handleClose }) {
         style={{ height: "80vh", overflowY: "auto", direction: "rtl" }}
       >
         <Tabs
-          defaultActiveKey="פרטי משתמש"
+          defaultActiveKey="משתמש"
           id="uncontrolled-tab-example"
           className="mb-3"
         >
-          <Tab eventKey="פרטי משתמש" title="פרטי משתמש">
+          <Tab eventKey="משתמש" title="משתמש">
             <UserStatus />
           </Tab>
-          <Tab eventKey="הוספת נתונים" title="הוספת נתונים">
+          <Tab eventKey="נתונים" title="נתונים">
             <CategorySelection />
           </Tab>
           <Tab eventKey="קטגוריות" title="קטגוריות">

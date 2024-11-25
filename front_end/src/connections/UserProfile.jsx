@@ -22,7 +22,6 @@ const UserProfileDisplay = () => {
   }, [userData, locations, loading, error]);
 
   if (loading) {
-    // console.log("עדיין טוען...");
     return <div>טוען...</div>;
   }
   if (error) {

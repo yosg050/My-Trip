@@ -3,7 +3,6 @@ import Map, { Marker, Popup } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import Markers from "./Marker";
 import { Spinner } from "react-bootstrap";
-import AutocompleteInput from "./SearchBox";
 import LocationModal from "./LocationModal"; 
 
 const TOKEN =
@@ -26,9 +25,7 @@ const PinIcon = ({ size = 24, color = "currentColor" }) => (
 
 function MyMap({
   filteredLocations,
-  // onCenterChange,
   center,
-  // onRefreshLocation,
   onLocationUpdate,
 }) {
   const [viewState, setViewState] = useState({
@@ -52,7 +49,6 @@ function MyMap({
       setMapSize({
         width: `${offsetWidth}px`,
         height: '100%'
-        // `${Math.floor(windowHeight * 0.88) - bottomMargin}px`,
       });
     }
   }, []);
@@ -71,13 +67,6 @@ function MyMap({
     });
   }, [center]);
 
-  // const handlePlaceSelect = (selectedPlace) => {
-  //   const newLocation = {
-  //     latitude: selectedPlace.latitude,
-  //     longitude: selectedPlace.longitude,
-  //   };
-  //   onCenterChange(newLocation);
-  // };
 
   const handleShow = useCallback((location) => {
     setSelectedLocation(location);
